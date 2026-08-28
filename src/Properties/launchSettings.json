@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MemoirMap": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
+    }
+  }
+}
