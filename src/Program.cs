@@ -18,6 +18,9 @@ if (app.Environment.IsDevelopment())//mine
     });
 }
 
+app.UseMiddleware<ExceptionHandlerMiddleware>();
+//MINE END
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
