@@ -1,14 +1,28 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddAuthorizationToOpenApiEndpoints();//mine
-builder.Services.InjectServices();//mine
+
+//MINE BEGIN
+builder.Services.InjectServices();
+builder.Services.AddAuthorizationToOpenApiEndpoints();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+builder.Services.AddIdentityCore<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+//builder.Services.AddAuthorizationBuilder();
+//MINE END
+
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())//mine
+//MINE BEGIN
+if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 
