@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using MemoirMap.Services.Interfaces;
 using MemoirMap.Models.DTOs;
 
-namespace Controllers;
+namespace MemoirMap.Controllers;
 
 [ApiController]
 [Route("my/subscription")]
