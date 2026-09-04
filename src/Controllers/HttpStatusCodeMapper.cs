@@ -5,31 +5,31 @@ static class ErrorToHttpStatusCodeMapper
     private static readonly IReadOnlyDictionary<string, int> ErrorCodesMap = new Dictionary<string, int>()
     {
         // these are redundant, because 500 error is thrown as an exception rather then returned, so it doesn't require a mapping
-        //["default_error"] = StatusCodes.Status500InternalServerError,
-        //["user_lockout_not_enabled"] = StatusCodes.Status500InternalServerError,
+        //["DefaultError"] = StatusCodes.Status500InternalServerError,
+        //["UserLockoutNotEnabled"] = StatusCodes.Status500InternalServerError,
 
-        ["user_not_in_role"] = StatusCodes.Status403Forbidden,
+        ["UserNotInRole"] = StatusCodes.Status403Forbidden,
 
-        ["duplicate_email"] = StatusCodes.Status409Conflict,
-        ["duplicate_user_name"] = StatusCodes.Status409Conflict,
-        ["duplicate_role_name"] = StatusCodes.Status409Conflict,
-        ["login_already_associated"] = StatusCodes.Status409Conflict,
-        ["user_already_has_password"] = StatusCodes.Status409Conflict,
-        ["user_already_in_role"] = StatusCodes.Status409Conflict,
-        ["concurrency_failure"] = StatusCodes.Status409Conflict,
+        ["DuplicateEmail"] = StatusCodes.Status409Conflict,
+        ["DuplicateUserName"] = StatusCodes.Status409Conflict,
+        ["DuplicateRoleName"] = StatusCodes.Status409Conflict,
+        ["LoginAlreadyAssociated"] = StatusCodes.Status409Conflict,
+        ["UserAlreadyHasPassword"] = StatusCodes.Status409Conflict,
+        ["UserAlreadyInRole"] = StatusCodes.Status409Conflict,
+        ["ConcurrencyFailure"] = StatusCodes.Status409Conflict,
 
-        ["invalid_email"] = StatusCodes.Status400BadRequest,
-        ["invalid_user_name"] = StatusCodes.Status400BadRequest,
-        ["invalid_role_name"] = StatusCodes.Status400BadRequest,
-        ["password_mismatch"] = StatusCodes.Status400BadRequest,
-        ["password_requires_digit"] = StatusCodes.Status400BadRequest,
-        ["password_requires_lower"] = StatusCodes.Status400BadRequest,
-        ["password_requires_non_alphanumeric"] = StatusCodes.Status400BadRequest,
-        ["password_requires_unique_chars"] = StatusCodes.Status400BadRequest,
-        ["password_requires_upper"] = StatusCodes.Status400BadRequest,
-        ["password_too_short"] = StatusCodes.Status400BadRequest,
-        ["invalid_token"] = StatusCodes.Status400BadRequest,
-        ["recovery_code_redemption_failed"] = StatusCodes.Status400BadRequest,
+        ["InvalidEmail"] = StatusCodes.Status400BadRequest,
+        ["InvalidUserName"] = StatusCodes.Status400BadRequest,
+        ["InvalidRoleName"] = StatusCodes.Status400BadRequest,
+        ["PasswordMismatch"] = StatusCodes.Status400BadRequest,
+        ["PasswordRequiresDigit"] = StatusCodes.Status400BadRequest,
+        ["PasswordRequiresLower"] = StatusCodes.Status400BadRequest,
+        ["PasswordRequiresNonAlphanumeric"] = StatusCodes.Status400BadRequest,
+        ["PasswordRequiresUniqueChars"] = StatusCodes.Status400BadRequest,
+        ["PasswordRequiresUpper"] = StatusCodes.Status400BadRequest,
+        ["PasswordTooShort"] = StatusCodes.Status400BadRequest,
+        ["InvalidToken"] = StatusCodes.Status400BadRequest,
+        ["RecoveryCodeRedemptionFailed"] = StatusCodes.Status400BadRequest,
     };
 
     private static readonly int[] HttpStatusCodesPriority =
