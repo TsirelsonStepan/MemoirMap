@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using MemoirMap.Services.Interfaces;
 
-namespace Controllers;
+namespace MemoirMap.Controllers;
 
 [ApiController]
 [Route("my")]

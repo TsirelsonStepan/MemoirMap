@@ -1,3 +1,5 @@
+using MemoirMap.Infrastructure;
+using MemoirMap.Infrastructure.Interfaces;
 using MemoirMap.Services;
 using MemoirMap.Services.Interfaces;
 
@@ -14,8 +16,8 @@ public static class DependencyInjection
         services.AddScoped<ISaveExperienceService, SaveExperienceService>();
         services.AddScoped<ISubscriptionService, SubscriptionService>();
 
-        services.AddScoped<ISaveLocationService, SaveLocationService>();
-        
+        services.AddScoped<IAuthenticationInfrastructure, AuthenticationInfrastructure>();
+
         return services;
     }
 }

@@ -5,7 +5,7 @@ using MemoirMap.Models.DomainModels;
 using MemoirMap.Services.Interfaces;
 using MemoirMap.Models.DTOs;
 
-namespace Controllers;
+namespace MemoirMap.Controllers;
 
 [ApiController]
 [Route("my/experience")]
