@@ -1,17 +1,24 @@
-using MemoirMap.Models.DTOs;
 using MemoirMap.Services.Interfaces;
+using MemoirMap.Infrastructure.Interfaces;
 
 namespace MemoirMap.Services;
 
 public class AuthenticationService : IAuthenticationService
 {
-    public string Login(LoginRequest loginData)
+    private readonly IAuthenticationInfrastructure _infrastructure;
+
+    public AuthenticationService(IAuthenticationInfrastructure infrastructure)
+    {
+        _infrastructure = infrastructure;
+    }
+
+    public Task<ServiceResult<string>> SignIn(string username, string password)
     {
         throw new NotImplementedException();
     }
 
-    public void Register(LoginRequest loginData)
+    public async Task<ServiceResult> Register(string username, string password)
     {
-        throw new NotImplementedException();
+        return await _infrastructure.CreateUser(username, password);
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MemoirMap.Models.DTOs;
 using MemoirMap.Services.Interfaces;
 
-namespace Controllers;
+namespace MemoirMap.Controllers;
 
 [ApiController]
 //[Produces("application/json")]
@@ -20,7 +20,7 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("signin")]
-    public ObjectResult SignIn([FromBody] LoginRequest loginData)
+    public SignInResult SignIn([FromBody] LoginRequest loginData)
     {
         //string jwt = _authenticationService.Login(loginData);
         //return Ok(jwt);
@@ -28,10 +28,11 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("register")]
-    public StatusCodeResult Register([FromBody] LoginRequest loginData)
+    public async Task<IActionResult> Register([FromBody] LoginRequest loginData)
     {
-        //_authenticationService.Register(loginData);
-        //return new StatusCodeResult(200);
-        throw new NotImplementedException();
+        ServiceResult result = await _authenticationService.Register(loginData.Username, loginData.Password);
+
+        if (result.IsSuccess) return StatusCode(StatusCodes.Status201Created);
+        return StatusCode(ErrorToHttpStatusCodeMapper.HttpStatusCodeFromErrorCodes(result.Errors), result.Errors);
     }
 }
