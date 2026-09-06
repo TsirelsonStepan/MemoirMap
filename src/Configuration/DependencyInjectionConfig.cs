@@ -3,6 +3,8 @@ using MemoirMap.Infrastructure.Interfaces;
 using MemoirMap.Services;
 using MemoirMap.Services.Interfaces;
 
+namespace MemoirMap.Configuration;
+
 public static class DependencyInjection
 {
     public static IServiceCollection InjectServices(this IServiceCollection services)
@@ -17,6 +19,7 @@ public static class DependencyInjection
         services.AddScoped<ISubscriptionService, SubscriptionService>();
 
         services.AddScoped<IAuthenticationInfrastructure, AuthenticationInfrastructure>();
+        services.AddScoped<ITokenInfrastructure, JwtTokenInfrastructure>();
 
         return services;
     }
