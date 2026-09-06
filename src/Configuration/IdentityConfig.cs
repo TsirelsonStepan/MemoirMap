@@ -1,0 +1,25 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+
+namespace MemoirMap.Configuration;
+
+public static class IdentityConfig
+{
+    public static IServiceCollection InitializeIdentity(this IServiceCollection services)
+    {
+        services
+        .AddIdentityCore<IdentityUser>(options =>
+        {
+            options.Password.RequireDigit = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireLowercase = false;
+            options.Password.RequireNonAlphanumeric = false;
+        })
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddSignInManager();
+
+        return services;
+    }
+}

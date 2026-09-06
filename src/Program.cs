@@ -1,5 +1,4 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using MemoirMap.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,12 +9,12 @@ builder.Services.AddControllersWithViews();
 //MINE BEGIN
 builder.Services.InjectServices();
 builder.Services.AddAuthorizationToOpenApiEndpoints();
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-{
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-builder.Services.AddIdentityCore<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
-//builder.Services.AddAuthorizationBuilder();
+builder.Services.InitializeNpgsqlDatabase
+(
+    builder.Configuration.GetConnectionString("DefaultConnection")
+);
+builder.Services.InitializeIdentity();
+
 //MINE END
 
 
