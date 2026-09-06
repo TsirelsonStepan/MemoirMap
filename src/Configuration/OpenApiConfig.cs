@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi;
 
+namespace MemoirMap.Configuration;
+
 public static class OpenApiConfig
 {
     public static IServiceCollection AddAuthorizationToOpenApiEndpoints(this IServiceCollection services)

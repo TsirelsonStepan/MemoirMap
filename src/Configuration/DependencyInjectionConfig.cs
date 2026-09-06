@@ -3,6 +3,8 @@ using MemoirMap.Infrastructure.Interfaces;
 using MemoirMap.Services;
 using MemoirMap.Services.Interfaces;
 
+namespace MemoirMap.Configuration;
+
 public static class DependencyInjection
 {
     public static IServiceCollection InjectServices(this IServiceCollection services)
