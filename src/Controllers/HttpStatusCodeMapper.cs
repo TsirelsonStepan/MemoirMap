@@ -2,34 +2,39 @@ namespace MemoirMap.Controllers;
 
 static class ErrorToHttpStatusCodeMapper
 {
-    private static readonly IReadOnlyDictionary<string, int> ErrorCodesMap = new Dictionary<string, int>()
+    private static readonly IReadOnlyDictionary<ApplicationErrorType, int> ErrorCodesMap = new Dictionary<ApplicationErrorType, int>()
     {
         // these are redundant, because 500 error is thrown as an exception rather then returned, so it doesn't require a mapping
-        //["DefaultError"] = StatusCodes.Status500InternalServerError,
-        //["UserLockoutNotEnabled"] = StatusCodes.Status500InternalServerError,
+        //[ApplicationErrorType.default_error] = StatusCodes.Status500InternalServerError,
+        //[ApplicationErrorType.user_lockout_not_enabled] = StatusCodes.Status500InternalServerError,
 
-        ["UserNotInRole"] = StatusCodes.Status403Forbidden,
+        [ApplicationErrorType.user_not_in_role] = StatusCodes.Status403Forbidden,
 
-        ["DuplicateEmail"] = StatusCodes.Status409Conflict,
-        ["DuplicateUserName"] = StatusCodes.Status409Conflict,
-        ["DuplicateRoleName"] = StatusCodes.Status409Conflict,
-        ["LoginAlreadyAssociated"] = StatusCodes.Status409Conflict,
-        ["UserAlreadyHasPassword"] = StatusCodes.Status409Conflict,
-        ["UserAlreadyInRole"] = StatusCodes.Status409Conflict,
-        ["ConcurrencyFailure"] = StatusCodes.Status409Conflict,
+        [ApplicationErrorType.duplicate_email] = StatusCodes.Status409Conflict,
+        [ApplicationErrorType.duplicate_user_name] = StatusCodes.Status409Conflict,
+        [ApplicationErrorType.duplicate_role_name] = StatusCodes.Status409Conflict,
+        [ApplicationErrorType.login_already_associated] = StatusCodes.Status409Conflict,
+        [ApplicationErrorType.user_already_has_password] = StatusCodes.Status409Conflict,
+        [ApplicationErrorType.user_already_in_role] = StatusCodes.Status409Conflict,
+        [ApplicationErrorType.concurrency_failure] = StatusCodes.Status409Conflict,
 
-        ["InvalidEmail"] = StatusCodes.Status400BadRequest,
-        ["InvalidUserName"] = StatusCodes.Status400BadRequest,
-        ["InvalidRoleName"] = StatusCodes.Status400BadRequest,
-        ["PasswordMismatch"] = StatusCodes.Status400BadRequest,
-        ["PasswordRequiresDigit"] = StatusCodes.Status400BadRequest,
-        ["PasswordRequiresLower"] = StatusCodes.Status400BadRequest,
-        ["PasswordRequiresNonAlphanumeric"] = StatusCodes.Status400BadRequest,
-        ["PasswordRequiresUniqueChars"] = StatusCodes.Status400BadRequest,
-        ["PasswordRequiresUpper"] = StatusCodes.Status400BadRequest,
-        ["PasswordTooShort"] = StatusCodes.Status400BadRequest,
-        ["InvalidToken"] = StatusCodes.Status400BadRequest,
-        ["RecoveryCodeRedemptionFailed"] = StatusCodes.Status400BadRequest,
+        [ApplicationErrorType.invalid_email] = StatusCodes.Status400BadRequest,
+        [ApplicationErrorType.invalid_user_name] = StatusCodes.Status400BadRequest,
+        [ApplicationErrorType.invalid_role_name] = StatusCodes.Status400BadRequest,
+        [ApplicationErrorType.password_mismatch] = StatusCodes.Status400BadRequest,
+        [ApplicationErrorType.password_requires_digit] = StatusCodes.Status400BadRequest,
+        [ApplicationErrorType.password_requires_lower] = StatusCodes.Status400BadRequest,
+        [ApplicationErrorType.password_requires_non_alphanumeric] = StatusCodes.Status400BadRequest,
+        [ApplicationErrorType.password_requires_unique_chars] = StatusCodes.Status400BadRequest,
+        [ApplicationErrorType.password_requires_upper] = StatusCodes.Status400BadRequest,
+        [ApplicationErrorType.password_too_short] = StatusCodes.Status400BadRequest,
+        [ApplicationErrorType.invalid_token] = StatusCodes.Status400BadRequest,
+        [ApplicationErrorType.recovery_code_redemption_failed] = StatusCodes.Status400BadRequest,
+        
+        [ApplicationErrorType.user_locked_out] = StatusCodes.Status401Unauthorized,
+        [ApplicationErrorType.user_not_allowed] = StatusCodes.Status401Unauthorized,
+        [ApplicationErrorType.two_factor_required] = StatusCodes.Status401Unauthorized,
+        [ApplicationErrorType.invalid_credentials] = StatusCodes.Status400BadRequest,
     };
 
     private static readonly int[] HttpStatusCodesPriority =
@@ -39,13 +44,13 @@ static class ErrorToHttpStatusCodeMapper
         StatusCodes.Status400BadRequest,
     ];
 
-    private static int MapErrorCode(string errorCode)
+    private static int MapErrorCode(ApplicationErrorType errorCode)
     {
         if (ErrorCodesMap.TryGetValue(errorCode, out int httpStatusCode)) return httpStatusCode;
         else throw new InvalidOperationException($"Unknown HTTP status code: {errorCode}");
     }
 
-    public static int HttpStatusCodeFromErrorCodes(IEnumerable<string> errorCodes)
+    public static int HttpStatusCodeFromErrorCodes(IEnumerable<ApplicationErrorType> errorCodes)
     {
         IEnumerable<int> httpStatusCodes = errorCodes.Select(MapErrorCode).Distinct();
 
