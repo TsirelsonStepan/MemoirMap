@@ -19,7 +19,6 @@ public static class DependencyInjection
         services.AddScoped<ISubscriptionService, SubscriptionService>();
 
         services.AddScoped<IAuthenticationInfrastructure, AuthenticationInfrastructure>();
-        services.AddScoped<ITokenInfrastructure, JwtTokenInfrastructure>();
 
         return services;
     }
