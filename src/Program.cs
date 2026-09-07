@@ -34,7 +34,13 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseMiddleware<ExceptionHandlerMiddleware>();
-app.UseExceptionHandler();
+app.UseExceptionHandler(exceptionHandlerApp =>
+{
+    exceptionHandlerApp.Run(async context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+    });
+});
 //MINE END
 
 app.UseHsts();
