@@ -15,6 +15,8 @@ builder.Services.InitializeNpgsqlDatabase
 );
 builder.Services.InitializeIdentity();
 
+builder.Services.AddExceptionHandler<ApplicationExceptionHandler>();
+
 //MINE END
 
 
@@ -31,22 +33,18 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseMiddleware<ExceptionHandlerMiddleware>();
+//app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.UseExceptionHandler();
 //MINE END
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-
+app.UseHsts();
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -54,3 +52,32 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+/*
+
+// ... other services
+
+app.UseExceptionHandler(); // must be placed after routing, but before endpoints
+
+
+
+
+string? pemFilePath = builder.Configuration["PrivateKeyFilePath"];
+string privateKeyPem = File.ReadAllText(pemFilePath ?? throw new Exception());
+builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+{
+    ["PrivateKeyPem"] = privateKeyPem
+});
+
+builder.Services.InitializeLocalRsaSigner
+(
+    builder.Configuration.GetValue<string>("PrivateKeyPem"),
+    out ISigner signer
+);
+builder.Services.InitializeJwtAuthentication
+(
+    builder.Configuration,
+    signer
+);
+builder.Services.AddAuthorization();
+*/
