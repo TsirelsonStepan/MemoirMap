@@ -1,3 +1,4 @@
+using MemoirMap.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 
 namespace MemoirMap.Configuration;

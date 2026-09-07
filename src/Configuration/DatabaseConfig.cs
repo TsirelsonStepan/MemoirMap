@@ -1,3 +1,4 @@
+using MemoirMap.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace MemoirMap.Configuration;
