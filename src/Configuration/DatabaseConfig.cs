@@ -14,4 +14,14 @@ public static class DatabaseConfig
 
         return services;
     }
+
+    public static IServiceCollection InitializeSqliteDatabase(this IServiceCollection services, string? connectionString)
+    {
+        services.AddDbContext<ApplicationDbContext>(options =>
+        {
+            options.UseSqlite(connectionString);
+        });
+
+        return services;
+    }
 }
