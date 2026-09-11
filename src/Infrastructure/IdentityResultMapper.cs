@@ -40,12 +40,12 @@ public static class IdentityResultMapper
         else throw new InvalidOperationException($"Unknown HTTP status code: {errorCode}");
     }
 
-    public static ServiceResult Map(this IdentityResult identityResult)
+    public static ApplicationResult Map(this IdentityResult identityResult)
     {
-        if (identityResult.Succeeded) return ServiceResult.Success();
+        if (identityResult.Succeeded) return ApplicationResult.Success();
         
         IEnumerable<ApplicationErrorType> errorCodes = identityResult.Errors.Select(error => MapIdentityErrorCode(error.Code));
 
-        return ServiceResult.Failure(errorCodes);
+        return ApplicationResult.Failure(errorCodes);
     }
 }

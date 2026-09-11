@@ -1,7 +1,5 @@
 using MemoirMap.Infrastructure;
-using MemoirMap.Infrastructure.Interfaces;
 using MemoirMap.Services;
-using MemoirMap.Services.Interfaces;
 
 namespace MemoirMap.Configuration;
 

@@ -1,6 +1,5 @@
 using MemoirMap.Models.DTOs;
 using MemoirMap.Models.DomainModels;
-using MemoirMap.Services.Interfaces;
 
 namespace MemoirMap.Services;
 

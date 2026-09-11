@@ -9,10 +9,10 @@ builder.Services.AddControllersWithViews();
 //MINE BEGIN
 builder.Services.InjectServices();
 builder.Services.AddAuthorizationToOpenApiEndpoints();
-builder.Services.InitializeNpgsqlDatabase
-(
-    builder.Configuration.GetConnectionString("DefaultConnection")
-);
+
+//builder.Services.InitializeNpgsqlDatabase(builder.Configuration.GetConnectionString("PostgresqlConnection"));
+builder.Services.InitializeSqliteDatabase(builder.Configuration.GetConnectionString("SqliteConnection"));
+
 builder.Services.InitializeIdentity();
 
 builder.Services.AddExceptionHandler<ApplicationExceptionHandler>();

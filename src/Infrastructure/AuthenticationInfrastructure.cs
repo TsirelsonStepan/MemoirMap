@@ -1,4 +1,3 @@
-using MemoirMap.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace MemoirMap.Infrastructure;
@@ -12,7 +11,7 @@ public class AuthenticationInfrastructure: IAuthenticationInfrastructure
         _userManager = userManager;
     }
 
-    public async Task<ServiceResult> CreateUser(string username, string password)
+    public async Task<ApplicationResult> CreateUser(string username, string password)
     {
         IdentityUser newUser = new(username);
         IdentityResult identityResult = await _userManager.CreateAsync(newUser, password);
