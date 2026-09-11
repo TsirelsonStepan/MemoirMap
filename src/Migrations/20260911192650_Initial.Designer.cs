@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MemoirMap.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260911192303_Initial")]
+    [Migration("20260911192650_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
