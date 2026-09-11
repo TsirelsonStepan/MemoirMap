@@ -31,16 +31,20 @@ static class ErrorToHttpStatusCodeMapper
         [ApplicationErrorType.invalid_token] = StatusCodes.Status400BadRequest,
         [ApplicationErrorType.recovery_code_redemption_failed] = StatusCodes.Status400BadRequest,
         
-        [ApplicationErrorType.user_locked_out] = StatusCodes.Status401Unauthorized,
-        [ApplicationErrorType.user_not_allowed] = StatusCodes.Status401Unauthorized,
+        [ApplicationErrorType.invalid_credentials] = StatusCodes.Status401Unauthorized,
         [ApplicationErrorType.two_factor_required] = StatusCodes.Status401Unauthorized,
-        [ApplicationErrorType.invalid_credentials] = StatusCodes.Status400BadRequest,
+
+        [ApplicationErrorType.user_not_allowed] = StatusCodes.Status403Forbidden,
+
+        [ApplicationErrorType.user_locked_out] = StatusCodes.Status423Locked,
     };
 
     private static readonly int[] HttpStatusCodesPriority =
     [
         StatusCodes.Status403Forbidden,
         StatusCodes.Status409Conflict,
+        StatusCodes.Status401Unauthorized,
+        StatusCodes.Status423Locked,
         StatusCodes.Status400BadRequest,
     ];
 

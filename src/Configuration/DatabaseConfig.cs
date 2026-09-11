@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MemoirMap.Configuration;
 
+//TO DO: Determine the DB type by parsing connection string
+
 public static class DatabaseConfig
 {
     public static IServiceCollection InitializeNpgsqlDatabase(this IServiceCollection services, string? connectionString)

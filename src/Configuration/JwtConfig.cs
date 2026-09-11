@@ -10,7 +10,7 @@ public static class JwtConfig
     {
         if (securityKeyPem == null) return services; //can't configure JWT without securityKey
 
-        IApplicationSigningKey securityKey = new RsaSigningKey(securityKeyPem);
+        RsaSigningKey securityKey = new(securityKeyPem);
 
         services.Configure<JwtOptions>(o =>
         {
@@ -46,14 +46,7 @@ public static class JwtConfig
     }
 }
 
-public interface IApplicationSigningKey
-{
-    public SecurityKey GetSigningKey();
-    public SecurityKey GetPublicKey();
-    public string GetAlgorithm();
-}
-
-public class RsaSigningKey : IApplicationSigningKey
+public class RsaSigningKey
 {
     private readonly RsaSecurityKey _privateKey;
     private readonly RsaSecurityKey _publicKey;
