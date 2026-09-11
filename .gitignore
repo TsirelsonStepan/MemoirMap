@@ -9,6 +9,7 @@ src/Controllers/HomeController.cs
 
 ## Hide development config
 src/appsettings.Development.json
+src/Properties/
 
 ## Hide docs generation scripts
 .docs-gen
