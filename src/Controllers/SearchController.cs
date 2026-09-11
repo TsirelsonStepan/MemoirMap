@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 
-using MemoirMap.Services.Interfaces;
 using MemoirMap.Models.DTOs;
 
 namespace MemoirMap.Controllers;
@@ -10,35 +9,31 @@ namespace MemoirMap.Controllers;
 public class SearchController : ControllerBase
 {
     private readonly ILogger<SearchController> _logger;
-    private readonly ILocationService _locationService;
-    private readonly IGetExperienceService _getExperienceService;
 
-    public SearchController(ILogger<SearchController> logger, ILocationService locationService, IGetExperienceService getExperienceService)
+    public SearchController(ILogger<SearchController> logger)
     {
         _logger = logger;
-        _locationService = locationService;
-        _getExperienceService = getExperienceService;
     }
 
-    [HttpGet("location/{locationId}")]
+    [HttpGet("locations/{locationId}")]
     public ObjectResult GetLocation([FromRoute] int locationId)
     {
         throw new NotImplementedException();
     }
 
-    [HttpGet("location")]
+    [HttpGet("locations")]
     public ObjectResult GetLocations([FromQuery] CircleAreaRequest area, [FromQuery] PaginationRequest pagination, [FromQuery] LocationFiltersRequest filters)
     {
         throw new NotImplementedException();
     }
 
-    [HttpGet("experience/{experienceId}")]
+    [HttpGet("experiences/{experienceId}")]
     public ObjectResult GetExperience([FromRoute] int experienceId)
     {
         throw new NotImplementedException();
     }
 
-    [HttpGet("experience")]
+    [HttpGet("experiences")]
     public ObjectResult GetExperiences([FromQuery] PaginationRequest pagination, [FromQuery] LocationFiltersRequest filters)
     {
         throw new NotImplementedException();
