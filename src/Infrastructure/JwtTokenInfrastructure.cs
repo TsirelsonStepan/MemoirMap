@@ -1,10 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Identity;
 
 using MemoirMap.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Options;
+using MemoirMap.Models.EntityModels;
 
 namespace MemoirMap.Infrastructure;
 
@@ -20,13 +20,13 @@ public class JwtTokenInfrastructure : ITokenInfrastructure
         _signingKey = signingKey;
     }
 
-    private async Task<string> CreateAccessTokenAsync(IdentityUser user)
+    private async Task<string> CreateAccessTokenAsync(UserAccountEntity user)
     {
-        string userId = user.Id;
+        string username = user.Username;
 
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, userId),
+            new Claim(JwtRegisteredClaimNames.UniqueName, username),
         };
 
         var token = new JwtSecurityToken
@@ -41,7 +41,7 @@ public class JwtTokenInfrastructure : ITokenInfrastructure
         return _jwtHandler.WriteToken(token);
     }
 
-    public async Task<string> IssueAccessTokenAsync(IdentityUser user)
+    public async Task<string> IssueAccessTokenAsync(UserAccountEntity user)
     {
         string accessToken = await CreateAccessTokenAsync(user);
 

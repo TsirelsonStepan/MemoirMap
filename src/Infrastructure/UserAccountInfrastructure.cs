@@ -1,27 +1,31 @@
+using MemoirMap.Models.EntityModels;
 using Microsoft.AspNetCore.Identity;
 
 namespace MemoirMap.Infrastructure;
 
-public class IdentityUserInfrastructure : IUserAccountInfrastructure
+public class UserAccountInfrastructure : IUserAccountInfrastructure
 {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<UserAccountEntity> _userManager;
 
-    public IdentityUserInfrastructure(UserManager<IdentityUser> userManager)
+    public UserAccountInfrastructure(UserManager<UserAccountEntity> userManager)
     {
         _userManager = userManager;
     }
 
     public async Task<ApplicationResult> CreateUser(string username, string password)
     {
-        IdentityUser newUser = new(username);
+        UserAccountEntity newUser = new()
+        {
+            Username = username
+        };
         IdentityResult identityResult = await _userManager.CreateAsync(newUser, password);
         return identityResult.Map();
     }
 
-    public async Task<ApplicationResult<IdentityUser>> ReadUserByNameAsync(string username)
+    public async Task<ApplicationResult<UserAccountEntity>> ReadUserByNameAsync(string username)
     {
-        IdentityUser? user = await _userManager.FindByNameAsync(username);
-        if (user == null) return ApplicationResult<IdentityUser>.Failure([ApplicationErrorType.invalid_credentials]);   
-        return ApplicationResult<IdentityUser>.Success(user);
+        UserAccountEntity? user = await _userManager.FindByNameAsync(username);
+        if (user == null) return ApplicationResult<UserAccountEntity>.Failure([ApplicationErrorType.invalid_credentials]);   
+        return ApplicationResult<UserAccountEntity>.Success(user);
     }
 }

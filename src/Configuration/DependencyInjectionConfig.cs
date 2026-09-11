@@ -18,7 +18,7 @@ public static class DependencyInjection
         services.AddScoped<ISubscriptionService, SubscriptionService>();
 
         services.AddScoped<ILogInInfrastructure, LogInInfrastructure>();
-        services.AddScoped<IUserAccountInfrastructure, IdentityUserInfrastructure>();
+        services.AddScoped<IUserAccountInfrastructure, UserAccountInfrastructure>();
         services.AddScoped<ITokenInfrastructure, JwtTokenInfrastructure>();
 
         return services;

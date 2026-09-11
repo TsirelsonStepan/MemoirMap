@@ -1,17 +1,18 @@
+using MemoirMap.Models.EntityModels;
 using Microsoft.AspNetCore.Identity;
 
 namespace MemoirMap.Infrastructure;
 
 public class LogInInfrastructure : ILogInInfrastructure
 {
-    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly SignInManager<UserAccountEntity> _signInManager;
 
-    public LogInInfrastructure(SignInManager<IdentityUser> signInManager)
+    public LogInInfrastructure(SignInManager<UserAccountEntity> signInManager)
     {
         _signInManager = signInManager;
     }
 
-    public async Task<ApplicationResult> CheckPasswordAsync(IdentityUser user, string password)
+    public async Task<ApplicationResult> CheckPasswordAsync(UserAccountEntity user, string password)
     {
         SignInResult signInResult = await _signInManager.CheckPasswordSignInAsync(user, password, true);
         if (signInResult.Succeeded) return ApplicationResult.Success();
