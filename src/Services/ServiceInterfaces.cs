@@ -8,8 +8,11 @@ public interface IAccountService
     public void DeleteAccount();
 }
 
-public interface ILogInService{ public Task<ApplicationResult<string>> LogIn(string username, string password); }
-public interface ISignUpService{ public Task<ApplicationResult> SignUp(string username, string password); }
+public interface IAuthenticationService
+{
+    public Task<ApplicationResult<string>> SignIn(string username, string password);
+    public Task<ApplicationResult> Register(string username, string password);
+}
 
 public interface IEditExperienceService
 {

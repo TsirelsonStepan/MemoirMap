@@ -8,8 +8,7 @@ public static class DependencyInjection
     public static IServiceCollection InjectServices(this IServiceCollection services)
     {
         services.AddScoped<IAccountService, AccountService>();
-        services.AddScoped<ILogInService, LogInService>();
-        services.AddScoped<ISignUpService, SignUpService>();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IEditExperienceService, EditExperienceService>();
         services.AddScoped<IGetExperienceService, GetExperienceService>();
         services.AddScoped<ILocationService, LocationService>();
@@ -17,9 +16,7 @@ public static class DependencyInjection
         services.AddScoped<ISaveExperienceService, SaveExperienceService>();
         services.AddScoped<ISubscriptionService, SubscriptionService>();
 
-        services.AddScoped<IUserAccountInfrastructure, IdentityUserInfrastructure>();
-        services.AddScoped<ILogInInfrastructure, LogInInfrastructure>();
-        services.AddScoped<ITokenInfrastructure, JwtTokenInfrastructure>();
+        services.AddScoped<IAuthenticationInfrastructure, AuthenticationInfrastructure>();
 
         return services;
     }

@@ -10,20 +10,18 @@ namespace MemoirMap.Controllers;
 public class AuthenticationController : ControllerBase
 {
     private readonly ILogger<AuthenticationController> _logger;
-    private readonly ILogInService _logInService;
-    private readonly ISignUpService _signUpService;
+    private readonly IAuthenticationService _authenticationService;
 
-    public AuthenticationController(ILogger<AuthenticationController> logger, ILogInService logInService, ISignUpService signUpService)
+    public AuthenticationController(ILogger<AuthenticationController> logger, IAuthenticationService authenticationService)
     {
         _logger = logger;
-        _logInService = logInService;
-        _signUpService = signUpService;
+        _authenticationService = authenticationService;
     }
 
     [HttpPost("login")]
     public async Task<IActionResult> LogIn([FromBody] LoginRequest loginData)
     {
-        ApplicationResult<string> result = await _logInService.LogIn(loginData.Username, loginData.Password);
+        ApplicationResult<string> result = await _authenticationService.SignIn(loginData.Username, loginData.Password);
         
         if (result.IsSuccess) return StatusCode(StatusCodes.Status200OK, result.Value);
         return StatusCode(ErrorToHttpStatusCodeMapper.HttpStatusCodeFromErrorCodes(result.Errors), result.Errors.Select(error => error.ToString()));
@@ -32,7 +30,7 @@ public class AuthenticationController : ControllerBase
     [HttpPost("signup")]
     public async Task<IActionResult> SignUp([FromBody] LoginRequest loginData)
     {
-        ApplicationResult result = await _signUpService.SignUp(loginData.Username, loginData.Password);
+        ApplicationResult result = await _authenticationService.Register(loginData.Username, loginData.Password);
 
         if (result.IsSuccess) return StatusCode(StatusCodes.Status200OK);
         return StatusCode(ErrorToHttpStatusCodeMapper.HttpStatusCodeFromErrorCodes(result.Errors), result.Errors.Select(error => error.ToString()));
