@@ -11,10 +11,10 @@ namespace MemoirMap.Infrastructure;
 public class JwtTokenInfrastructure : ITokenInfrastructure
 {
     private readonly JwtOptions _jwtOptions;
-    private readonly IApplicationSigningKey _signingKey;
+    private readonly RsaSigningKey _signingKey;
     private readonly JwtSecurityTokenHandler _jwtHandler = new();
 
-    public JwtTokenInfrastructure(IOptions<JwtOptions> options, IApplicationSigningKey signingKey)
+    public JwtTokenInfrastructure(IOptions<JwtOptions> options, RsaSigningKey signingKey)
     {
         _jwtOptions = options.Value;
         _signingKey = signingKey;

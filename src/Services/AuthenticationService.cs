@@ -33,15 +33,15 @@ public class LogInService : ILogInService
 
 public class SignUpService : ISignUpService
 {
-    private readonly IUserAccountInfrastructure _infrastructure;
+    private readonly IUserAccountInfrastructure _userAccount;
 
-    public SignUpService(IUserAccountInfrastructure infrastructure)
+    public SignUpService(IUserAccountInfrastructure userAccount)
     {
-        _infrastructure = infrastructure;
+        _userAccount = userAccount;
     }
 
     public async Task<ApplicationResult> SignUp(string username, string password)
     {
-        return await _infrastructure.CreateUser(username, password);
+        return await _userAccount.CreateUser(username, password);
     }
 }
