@@ -6,10 +6,11 @@ namespace MemoirMap.Configuration;
 
 public static class JwtConfig
 {
-    public static IServiceCollection InitializeJwt(this IServiceCollection services, JwtOptions jwtOptions, IApplicationSigningKey securityKey)
+    public static IServiceCollection InitializeJwt(this IServiceCollection services, JwtOptions jwtOptions, string? securityKeyPem)
     {
-        if (jwtOptions.Issuer == null || jwtOptions.Audience == null)
-            throw new InvalidOperationException("JWT configuration is invalid.");
+        if (securityKeyPem == null) return services; //can't configure JWT without securityKey
+
+        IApplicationSigningKey securityKey = new RsaSigningKey(securityKeyPem);
 
         services.Configure<JwtOptions>(o =>
         {

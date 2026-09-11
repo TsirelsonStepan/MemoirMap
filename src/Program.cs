@@ -18,8 +18,8 @@ builder.Services.InitializeIdentity();
 builder.Services.AddExceptionHandler<ApplicationExceptionHandler>();
 builder.Services.InitializeJwt
 (
-    builder.Configuration.GetSection("Jwt").Get<JwtOptions>() ?? throw new Exception(),
-    new RsaSigningKey(builder.Configuration.GetValue<string>("PrivateKeyPem") ?? throw new Exception())
+    builder.Configuration.GetSection("Jwt").Get<JwtOptions>() ?? throw new InvalidOperationException("JWT configuration is undefined"),
+    builder.Configuration.GetValue<string>("PrivateKeyPem")
 );
 builder.Services.AddAuthorization();
 
