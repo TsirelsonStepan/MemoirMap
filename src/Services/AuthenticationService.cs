@@ -1,22 +1,46 @@
+
 using MemoirMap.Infrastructure;
+using Microsoft.AspNetCore.Identity;
 
 namespace MemoirMap.Services;
 
-public class AuthenticationService : IAuthenticationService
+public class LogInService : ILogInService
 {
-    private readonly IAuthenticationInfrastructure _infrastructure;
+    private readonly IUserAccountInfrastructure _userAccount;
+    private readonly ITokenInfrastructure _token;
+    private readonly ILogInInfrastructure _logIn;
 
-    public AuthenticationService(IAuthenticationInfrastructure infrastructure)
+    public LogInService(IUserAccountInfrastructure userAccount, ITokenInfrastructure token, ILogInInfrastructure logIn)
+    {
+        _userAccount = userAccount;
+        _logIn = logIn;
+        _token = token;
+    }
+
+    public async Task<ApplicationResult<string>> LogIn(string username, string password)
+    {
+        ApplicationResult<IdentityUser> readUserResult = await _userAccount.ReadUserByNameAsync(username);
+        if (!readUserResult.IsSuccess || readUserResult.Value == null) return ApplicationResult<string>.Failure(readUserResult.Errors);
+        
+        ApplicationResult checkPasswordResult = await _logIn.CheckPasswordAsync(readUserResult.Value, password);
+        if (!checkPasswordResult.IsSuccess) return ApplicationResult<string>.Failure(checkPasswordResult.Errors);
+
+        string accessToken = await _token.IssueAccessTokenAsync(readUserResult.Value);
+        
+        return ApplicationResult<string>.Success(accessToken);
+    }
+}
+
+public class SignUpService : ISignUpService
+{
+    private readonly IUserAccountInfrastructure _infrastructure;
+
+    public SignUpService(IUserAccountInfrastructure infrastructure)
     {
         _infrastructure = infrastructure;
     }
 
-    public Task<ApplicationResult<string>> SignIn(string username, string password)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<ApplicationResult> Register(string username, string password)
+    public async Task<ApplicationResult> SignUp(string username, string password)
     {
         return await _infrastructure.CreateUser(username, password);
     }
