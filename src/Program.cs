@@ -16,6 +16,12 @@ builder.Services.InitializeSqliteDatabase(builder.Configuration.GetConnectionStr
 builder.Services.InitializeIdentity();
 
 builder.Services.AddExceptionHandler<ApplicationExceptionHandler>();
+builder.Services.InitializeJwt
+(
+    builder.Configuration.GetSection("Jwt").Get<JwtOptions>() ?? throw new Exception(),
+    new RsaSigningKey(builder.Configuration.GetValue<string>("PrivateKeyPem") ?? throw new Exception())
+);
+builder.Services.AddAuthorization();
 
 //MINE END
 
@@ -58,32 +64,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-
-/*
-
-// ... other services
-
-app.UseExceptionHandler(); // must be placed after routing, but before endpoints
-
-
-
-
-string? pemFilePath = builder.Configuration["PrivateKeyFilePath"];
-string privateKeyPem = File.ReadAllText(pemFilePath ?? throw new Exception());
-builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
-{
-    ["PrivateKeyPem"] = privateKeyPem
-});
-
-builder.Services.InitializeLocalRsaSigner
-(
-    builder.Configuration.GetValue<string>("PrivateKeyPem"),
-    out ISigner signer
-);
-builder.Services.InitializeJwtAuthentication
-(
-    builder.Configuration,
-    signer
-);
-builder.Services.AddAuthorization();
-*/
