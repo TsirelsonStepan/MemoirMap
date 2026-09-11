@@ -1,7 +1,5 @@
 using MemoirMap.Infrastructure;
-using MemoirMap.Infrastructure.Interfaces;
 using MemoirMap.Services;
-using MemoirMap.Services.Interfaces;
 
 namespace MemoirMap.Configuration;
 
@@ -10,7 +8,8 @@ public static class DependencyInjection
     public static IServiceCollection InjectServices(this IServiceCollection services)
     {
         services.AddScoped<IAccountService, AccountService>();
-        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<ILogInService, LogInService>();
+        services.AddScoped<ISignUpService, SignUpService>();
         services.AddScoped<IEditExperienceService, EditExperienceService>();
         services.AddScoped<IGetExperienceService, GetExperienceService>();
         services.AddScoped<ILocationService, LocationService>();
@@ -18,7 +17,9 @@ public static class DependencyInjection
         services.AddScoped<ISaveExperienceService, SaveExperienceService>();
         services.AddScoped<ISubscriptionService, SubscriptionService>();
 
-        services.AddScoped<IAuthenticationInfrastructure, AuthenticationInfrastructure>();
+        services.AddScoped<IUserAccountInfrastructure, IdentityUserInfrastructure>();
+        services.AddScoped<ILogInInfrastructure, LogInInfrastructure>();
+        services.AddScoped<ITokenInfrastructure, JwtTokenInfrastructure>();
 
         return services;
     }
