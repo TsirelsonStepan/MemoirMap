@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 using MemoirMap.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -26,7 +27,7 @@ public class JwtTokenInfrastructure : ITokenInfrastructure
 
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.UniqueName, username),
+            new Claim(ClaimTypes.Name, username),
         };
 
         var token = new JwtSecurityToken

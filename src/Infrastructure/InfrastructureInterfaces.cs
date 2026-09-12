@@ -6,6 +6,8 @@ public interface IUserAccountInfrastructure
     public Task<ApplicationResult> CreateUser(string username, string password);
 
     public Task<ApplicationResult<UserAccountEntity>> ReadUserByNameAsync(string username);
+    //Update
+    public Task<ApplicationResult> DeleteUserAsync(UserAccountEntity user);
 }
 
 public interface ILogInInfrastructure

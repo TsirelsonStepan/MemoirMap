@@ -28,4 +28,12 @@ public class UserAccountInfrastructure : IUserAccountInfrastructure
         if (user == null) return ApplicationResult<UserAccountEntity>.Failure([ApplicationErrorType.invalid_credentials]);   
         return ApplicationResult<UserAccountEntity>.Success(user);
     }
+
+    //Update
+
+    public async Task<ApplicationResult> DeleteUserAsync(UserAccountEntity user)
+    {
+        IdentityResult identityResult =  await _userManager.DeleteAsync(user);
+        return identityResult.Map();
+    }
 }
