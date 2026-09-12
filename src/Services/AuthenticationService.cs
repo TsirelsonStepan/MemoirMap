@@ -1,6 +1,6 @@
 
 using MemoirMap.Infrastructure;
-using Microsoft.AspNetCore.Identity;
+using MemoirMap.Models.EntityModels;
 
 namespace MemoirMap.Services;
 
@@ -19,7 +19,7 @@ public class LogInService : ILogInService
 
     public async Task<ApplicationResult<string>> LogIn(string username, string password)
     {
-        ApplicationResult<IdentityUser> readUserResult = await _userAccount.ReadUserByNameAsync(username);
+        ApplicationResult<UserAccountEntity> readUserResult = await _userAccount.ReadUserByNameAsync(username);
         if (!readUserResult.IsSuccess || readUserResult.Value == null) return ApplicationResult<string>.Failure(readUserResult.Errors);
         
         ApplicationResult checkPasswordResult = await _logIn.CheckPasswordAsync(readUserResult.Value, password);

@@ -5,7 +5,7 @@ namespace MemoirMap.Services;
 
 public interface IAccountService
 {
-    public void DeleteAccount();
+    public Task<ApplicationResult> DeleteAccount(string username);
 }
 
 public interface ILogInService
