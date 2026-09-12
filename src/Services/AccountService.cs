@@ -1,6 +1,5 @@
 using MemoirMap.Infrastructure;
 using MemoirMap.Models.EntityModels;
-using Microsoft.AspNetCore.Identity;
 
 namespace MemoirMap.Services;
 
