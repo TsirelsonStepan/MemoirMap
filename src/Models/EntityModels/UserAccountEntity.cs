@@ -1,11 +1,6 @@
 namespace MemoirMap.Models.EntityModels;
 
-public class CustomUserAccountEntity : UserAccountEntity
-{
-    public CustomUserAccountEntity(string username) : base(username) { }
-}
-
-public abstract class UserAccountEntity
+public class UserAccountEntity : IUserAccountEntity
 {
     public string Id { get; set; } = null!;
     public string Username { get; set; } = null!;
@@ -16,4 +11,12 @@ public abstract class UserAccountEntity
     {
         Username = username;
     }
+}
+
+public interface IUserAccountEntity
+{
+    public string Id { get; set; }
+    public string Username { get; set; }
+    public string NormalizedUsername { get; set; }
+    public string? PasswordHash { get; set; }
 }
