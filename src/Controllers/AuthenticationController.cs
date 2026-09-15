@@ -25,8 +25,22 @@ public class AuthenticationController : ControllerBase
     {
         ApplicationResult<string> result = await _logIn.LogIn(loginData.Username, loginData.Password);
         
-        if (result.IsSuccess) return StatusCode(StatusCodes.Status200OK, result.Value);
-        return StatusCode(ErrorToHttpStatusCodeMapper.HttpStatusCodeFromErrorCodes(result.Errors), result.Errors.Select(error => error.ToString()));
+        if (result.IsSuccess) return StatusCode
+        (
+            StatusCodes.Status200OK,
+            new LogInResponse()
+            {
+                AccessToken = result.Value
+            }
+        );
+        return StatusCode
+        (
+            ErrorToHttpStatusCodeMapper.HttpStatusCodeFromErrorCodes(result.Errors),
+            new ErrorsResponse()
+            {
+                Errors = result.Errors.Select(error => error.ToString())
+            }
+        );
     }
 
     [HttpPost("signup")]
@@ -35,6 +49,13 @@ public class AuthenticationController : ControllerBase
         ApplicationResult result = await _signUp.SignUp(loginData.Username, loginData.Password);
 
         if (result.IsSuccess) return StatusCode(StatusCodes.Status200OK);
-        return StatusCode(ErrorToHttpStatusCodeMapper.HttpStatusCodeFromErrorCodes(result.Errors), result.Errors.Select(error => error.ToString()));
+        return StatusCode
+        (
+            ErrorToHttpStatusCodeMapper.HttpStatusCodeFromErrorCodes(result.Errors),
+            new ErrorsResponse()
+            {
+                Errors = result.Errors.Select(error => error.ToString())
+            }
+        );
     }
 }
