@@ -8,12 +8,13 @@ using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Hosting;
 
 using MemoirMap.Infrastructure;
+using Microsoft.AspNetCore.TestHost;
 
 public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.ConfigureServices(services =>
+        builder.ConfigureTestServices(services =>
         {
             ServiceDescriptor? dbContextDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IDbContextOptionsConfiguration<ApplicationDbContext>));
 
