@@ -14,7 +14,7 @@ public class UserAccountInfrastructure : IUserAccountInfrastructure
 
     public async Task<ApplicationResult> CreateUser(string username, string password)
     {
-        UserAccountEntity newUser = new CustomUserAccountEntity(username);
+        UserAccountEntity newUser = new(username);
         IdentityResult identityResult = await _userManager.CreateAsync(newUser, password);
         return identityResult.Map();
     }
