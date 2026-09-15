@@ -1,15 +1,19 @@
 namespace MemoirMap.Models.EntityModels;
 
-public class UserAccountEntity : IUserAccountEntity
+public class CustomUserAccountEntity : UserAccountEntity
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString();
-    public string Username { get; set; } = null!;
-    public string? PasswordHash { get; set; } = null!;
+    public CustomUserAccountEntity(string username) : base(username) { }
 }
 
-public interface IUserAccountEntity
+public abstract class UserAccountEntity
 {
-    public string Id { get; set; }
-    public string Username { get; set; }
+    public string Id { get; set; } = null!;
+    public string Username { get; set; } = null!;
+    public string NormalizedUsername { get; set; } = null!;
     public string? PasswordHash { get; set; }
+
+    public UserAccountEntity(string username)
+    {
+        Username = username;
+    }
 }

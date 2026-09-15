@@ -27,7 +27,7 @@ public class ApplicationDbContext : DbContext
         .IsRequired();
     }
 
-    public DbSet<UserAccountEntity> UserAccounts { get; set; }
+    public DbSet<UserAccountEntity> Users { get; set; }
 }
 
 public class UserAccountStore : IUserStore<UserAccountEntity>, IUserPasswordStore<UserAccountEntity>
@@ -57,18 +57,19 @@ public class UserAccountStore : IUserStore<UserAccountEntity>, IUserPasswordStor
 
     public Task<string?> GetNormalizedUserNameAsync(UserAccountEntity user, CancellationToken cancellationToken)
     {
-        return Task.FromResult<string?>(user.Username.ToUpperInvariant());
+        return Task.FromResult<string?>(user.NormalizedUsername);
     }
 
     public Task SetNormalizedUserNameAsync(UserAccountEntity user, string? normalizedName, CancellationToken cancellationToken)
     {
-        user.Username = normalizedName!;
+        user.NormalizedUsername = normalizedName ?? string.Empty;
         return Task.CompletedTask;
     }
 
     public async Task<IdentityResult> CreateAsync(UserAccountEntity user, CancellationToken cancellationToken)
     {
-        _db.UserAccounts.Add(user);
+        user.Id = Guid.NewGuid().ToString();
+        _db.Users.Add(user);
         await _db.SaveChangesAsync(cancellationToken);
 
         return IdentityResult.Success;
@@ -76,7 +77,7 @@ public class UserAccountStore : IUserStore<UserAccountEntity>, IUserPasswordStor
 
     public async Task<IdentityResult> UpdateAsync(UserAccountEntity user, CancellationToken cancellationToken)
     {
-        _db.UserAccounts.Update(user);
+        _db.Users.Update(user);
         await _db.SaveChangesAsync(cancellationToken);
 
         return IdentityResult.Success;
@@ -84,7 +85,7 @@ public class UserAccountStore : IUserStore<UserAccountEntity>, IUserPasswordStor
 
     public async Task<IdentityResult> DeleteAsync(UserAccountEntity user, CancellationToken cancellationToken)
     {
-        _db.UserAccounts.Remove(user);
+        _db.Users.Remove(user);
         await _db.SaveChangesAsync(cancellationToken);
 
         return IdentityResult.Success;
@@ -92,12 +93,12 @@ public class UserAccountStore : IUserStore<UserAccountEntity>, IUserPasswordStor
 
     public Task<UserAccountEntity?> FindByIdAsync(string userId, CancellationToken cancellationToken)
     {
-        return _db.UserAccounts.FindAsync([userId], cancellationToken).AsTask();
+        return _db.Users.FindAsync([userId], cancellationToken).AsTask();
     }
 
     public Task<UserAccountEntity?> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
     {
-        return _db.UserAccounts.FirstOrDefaultAsync(x => x.Username == normalizedUserName, cancellationToken);
+        return _db.Users.FirstOrDefaultAsync(x => x.NormalizedUsername == normalizedUserName, cancellationToken);
     }
 
     public void Dispose()
