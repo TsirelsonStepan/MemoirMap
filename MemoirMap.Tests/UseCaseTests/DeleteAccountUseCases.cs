@@ -81,9 +81,9 @@ public class DeleteAccountUseCases : IClassFixture<CustomWebApplicationFactory<P
         ApplicationDbContext db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         // Act
-        bool existsBeforeDelete = await db.UserAccounts.AnyAsync(x => x.Username == username);
+        bool existsBeforeDelete = await db.UserAccounts.AnyAsync(x => x.Username == username.ToUpperInvariant());
         HttpResponseMessage responseMessage = await client.DeleteAsync("/my/account");
-        bool existsAfterDelete = await db.UserAccounts.AnyAsync(x => x.Username == username);
+        bool existsAfterDelete = await db.UserAccounts.AnyAsync(x => x.Username == username.ToUpperInvariant());
 
         // Assert
         responseMessage.EnsureSuccessStatusCode();

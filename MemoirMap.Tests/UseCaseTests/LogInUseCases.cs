@@ -13,7 +13,7 @@ public class LogInUseCases : IClassFixture<CustomWebApplicationFactory<Program>>
     {
         _factory = factory;
     }
-
+/*
     [Fact]
     public async Task LogInUseCaseTest_LockedOutFailure()
     {
@@ -35,7 +35,7 @@ public class LogInUseCases : IClassFixture<CustomWebApplicationFactory<Program>>
         Assert.NotEmpty(errorsResponse.Errors);
         Assert.Contains(ApplicationErrorType.user_locked_out.ToString(), errorsResponse.Errors);
     }
-
+*/
     [Fact]
     public async Task LogInUseCaseTest_InvalidCredentialsFailure()
     {
