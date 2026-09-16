@@ -7,12 +7,12 @@ public interface IUserAccountInfrastructure
 
     public Task<ApplicationResult<UserAccountEntity>> ReadUserByNameAsync(string username);
     //Update
-    public Task<ApplicationResult> DeleteUserAsync(UserAccountEntity user);
+    public Task<ApplicationResult> DeleteUserByIdAsync(string userId);
 }
 
 public interface ILogInInfrastructure
 {
-    public Task<ApplicationResult> CheckPasswordAsync(UserAccountEntity user, string password);
+    public Task<ApplicationResult> CheckPasswordAsync(string username, string password);
 }
 
 public interface ITokenInfrastructure

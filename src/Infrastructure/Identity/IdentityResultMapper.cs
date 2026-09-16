@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace MemoirMap.Infrastructure;
+namespace MemoirMap.Infrastructure.Identity;
 
 public static class IdentityResultMapper
 {
