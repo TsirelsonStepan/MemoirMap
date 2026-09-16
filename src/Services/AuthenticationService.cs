@@ -19,7 +19,7 @@ public class LogInService : ILogInService
 
     public async Task<ApplicationResult<string>> LogIn(string username, string password)
     {
-        ApplicationResult<UserAccountEntity> readUserResult = await _userAccount.ReadUserByNameAsync(username);
+        ApplicationResult<IUserAccountEntity> readUserResult = await _userAccount.ReadUserByNameAsync(username);
         if (!readUserResult.IsSuccess || readUserResult.Value == null) return ApplicationResult<string>.Failure(readUserResult.Errors);
         
         ApplicationResult checkPasswordResult = await _logIn.CheckPasswordAsync(readUserResult.Value, password);

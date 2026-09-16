@@ -11,7 +11,7 @@ builder.Services.InjectServices();
 builder.Services.AddAuthorizationToOpenApiEndpoints();
 
 //builder.Services.InitializeNpgsqlDatabase(builder.Configuration.GetConnectionString("PostgresqlConnection"));
-builder.Services.InitializeSqliteDatabase(builder.Configuration.GetConnectionString("SqliteConnection"));
+builder.Services.InitializeSqliteDatabaseWithIdentity(builder.Configuration.GetConnectionString("SqliteConnection"));
 
 builder.Services.InitializeIdentity();
 

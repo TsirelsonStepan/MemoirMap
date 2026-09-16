@@ -14,7 +14,7 @@ public class AccountService : IAccountService
 
     public async Task<ApplicationResult> DeleteAccount(string username)
     {
-        ApplicationResult<UserAccountEntity> readUserResult = await _userAccount.ReadUserByNameAsync(username);
+        ApplicationResult<IUserAccountEntity> readUserResult = await _userAccount.ReadUserByNameAsync(username);
         if (!readUserResult.IsSuccess || readUserResult.Value == null) return ApplicationResult.Failure(readUserResult.Errors);
         return await _userAccount.DeleteUserAsync(readUserResult.Value);
     }

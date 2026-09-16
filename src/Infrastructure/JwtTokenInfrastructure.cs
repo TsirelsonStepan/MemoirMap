@@ -21,7 +21,7 @@ public class JwtTokenInfrastructure : ITokenInfrastructure
         _signingKey = signingKey;
     }
 
-    private async Task<string> CreateAccessTokenAsync(UserAccountEntity user)
+    private async Task<string> CreateAccessTokenAsync(IUserAccountEntity user)
     {
         string username = user.Username;
 
@@ -42,7 +42,7 @@ public class JwtTokenInfrastructure : ITokenInfrastructure
         return _jwtHandler.WriteToken(token);
     }
 
-    public async Task<string> IssueAccessTokenAsync(UserAccountEntity user)
+    public async Task<string> IssueAccessTokenAsync(IUserAccountEntity user)
     {
         string accessToken = await CreateAccessTokenAsync(user);
 

@@ -1,17 +1,16 @@
 using MemoirMap.Models.EntityModels;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace MemoirMap.Infrastructure;
 
-public class ApplicationDbContext : DbContext
+public class CustomApplicationDbContext : DbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options) { }
+    public CustomApplicationDbContext(DbContextOptions<CustomApplicationDbContext> options): base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        var user = modelBuilder.Entity<UserAccountEntity>();
+        var user = modelBuilder.Entity<CustomUserAccountEntity>();
 
         user
         .Property(x => x.Username)
@@ -27,9 +26,9 @@ public class ApplicationDbContext : DbContext
         .IsRequired();
     }
 
-    public DbSet<UserAccountEntity> Users { get; set; }
+    public DbSet<CustomUserAccountEntity> UserAccounts { get; set; }
 }
-
+/*
 public class UserAccountStore : IUserStore<UserAccountEntity>, IUserPasswordStore<UserAccountEntity>
 {
     private readonly ApplicationDbContext _db;
@@ -121,4 +120,4 @@ public class UserAccountStore : IUserStore<UserAccountEntity>, IUserPasswordStor
     {
         return Task.FromResult(!string.IsNullOrEmpty(user.PasswordHash));
     }
-}
+}*/

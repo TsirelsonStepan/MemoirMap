@@ -9,14 +9,15 @@ public static class IdentityConfig
     public static IServiceCollection InitializeIdentity(this IServiceCollection services)
     {
         services
-        .AddIdentityCore<UserAccountEntity>(options =>
+        .AddIdentityCore<IdentityUserAccountEntity>(options =>
         {
             options.Password.RequireDigit = false;
             options.Password.RequireUppercase = false;
             options.Password.RequireLowercase = false;
             options.Password.RequireNonAlphanumeric = false;
         })
-        .AddUserStore<UserAccountStore>()
+        .AddRoles<IdentityRole>()
+        .AddEntityFrameworkStores<IdentityApplicationDbContext>()
         .AddSignInManager();
 
         return services;
