@@ -1,4 +1,3 @@
-
 using MemoirMap.Infrastructure;
 using MemoirMap.Models.EntityModels;
 
@@ -19,12 +18,12 @@ public class LogInService : ILogInService
 
     public async Task<ApplicationResult<string>> LogIn(string username, string password)
     {
+        ApplicationResult checkPasswordResult = await _logIn.CheckPasswordAsync(username, password);
+        if (!checkPasswordResult.IsSuccess) return ApplicationResult<string>.Failure(checkPasswordResult.Errors);
+
         ApplicationResult<UserAccountEntity> readUserResult = await _userAccount.ReadUserByNameAsync(username);
         if (!readUserResult.IsSuccess || readUserResult.Value == null) return ApplicationResult<string>.Failure(readUserResult.Errors);
         
-        ApplicationResult checkPasswordResult = await _logIn.CheckPasswordAsync(readUserResult.Value, password);
-        if (!checkPasswordResult.IsSuccess) return ApplicationResult<string>.Failure(checkPasswordResult.Errors);
-
         string accessToken = await _token.IssueAccessTokenAsync(readUserResult.Value);
         
         return ApplicationResult<string>.Success(accessToken);
