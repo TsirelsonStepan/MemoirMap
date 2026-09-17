@@ -1,6 +1,4 @@
 using MemoirMap.Infrastructure;
-using MemoirMap.Models.EntityModels;
-using Microsoft.AspNetCore.Identity;
 
 namespace MemoirMap.Services;
 
@@ -13,10 +11,8 @@ public class AccountService : IAccountService
         _userAccount = userAccount;
     }
 
-    public async Task<ApplicationResult> DeleteAccount(string username)
+    public async Task<ApplicationResult> DeleteAccount(string userId)
     {
-        ApplicationResult<UserAccountEntity> readUserResult = await _userAccount.ReadUserByNameAsync(username);
-        if (!readUserResult.IsSuccess || readUserResult.Value == null) return ApplicationResult.Failure(readUserResult.Errors);
-        return await _userAccount.DeleteUserByIdAsync(readUserResult.Value.Id);
+        return await _userAccount.DeleteUserByIdAsync(userId);
     }
 }

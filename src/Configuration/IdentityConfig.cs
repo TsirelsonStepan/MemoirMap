@@ -9,7 +9,7 @@ public static class IdentityConfig
     public static IServiceCollection InitializeIdentity(this IServiceCollection services)
     {
         services
-        .AddIdentityCore<UserAccountEntity>(options =>
+        .AddIdentityCore<IdentityUserAccountEntity>(options =>
         {
             options.Password.RequireDigit = false;
             options.Password.RequireUppercase = false;

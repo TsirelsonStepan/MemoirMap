@@ -26,7 +26,7 @@ public class JwtTokenInfrastructure : ITokenInfrastructure
 
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, userId),
+            new Claim(ClaimTypes.NameIdentifier, userId),
         };
 
         var token = new JwtSecurityToken
