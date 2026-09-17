@@ -11,11 +11,12 @@ builder.Services.InjectServices();
 builder.Services.AddAuthorizationToOpenApiEndpoints();
 
 //builder.Services.InitializeNpgsqlDatabase(builder.Configuration.GetConnectionString("PostgresqlConnection"));
-builder.Services.InitializeSqliteDatabase(builder.Configuration.GetConnectionString("SqliteConnection"));
+builder.Services.InitializeSqliteDatabaseWithIdentity(builder.Configuration.GetConnectionString("SqliteConnection"));
 
 builder.Services.InitializeIdentity();
 
 builder.Services.AddExceptionHandler<ApplicationExceptionHandler>();
+builder.Services.AddProblemDetails();
 builder.Services.InitializeJwt
 (
     builder.Configuration.GetSection("Jwt").Get<JwtOptions>() ?? throw new InvalidOperationException("JWT configuration is undefined"),
@@ -40,13 +41,7 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseMiddleware<ExceptionHandlerMiddleware>();
-app.UseExceptionHandler(exceptionHandlerApp =>
-{
-    exceptionHandlerApp.Run(async context =>
-    {
-        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-    });
-});
+app.UseExceptionHandler();
 //MINE END
 
 app.UseHsts();

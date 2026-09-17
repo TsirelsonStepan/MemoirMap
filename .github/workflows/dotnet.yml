@@ -25,6 +25,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      env:
-        PrivateKeyPem: ${{ secrets.PRIVATE_KEY_PEM }}
       run: dotnet test --no-build --verbosity normal

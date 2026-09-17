@@ -2,16 +2,16 @@ using MemoirMap.Models.EntityModels;
 
 namespace MemoirMap.Infrastructure.Custom;
 
-public class CustomUserInfrastructure : IUserAccountInfrastructure
+public class CustomInfrastructure : IUserAccountInfrastructure, ILogInInfrastructure
 {
-/*
+
     private readonly CustomApplicationDbContext _dbContext;
 
-    public CustomUserInfrastructure(ApplicationDbContext dbContext)
+    public CustomInfrastructure(CustomApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
-*/
+
     public async Task<ApplicationResult> CreateUser(string username, string password)
     {
         throw new NotImplementedException();
@@ -25,6 +25,11 @@ public class CustomUserInfrastructure : IUserAccountInfrastructure
     //Update
 
     public async Task<ApplicationResult> DeleteUserByIdAsync(string userId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<ApplicationResult> CheckPasswordAsync(string username, string password)
     {
         throw new NotImplementedException();
     }

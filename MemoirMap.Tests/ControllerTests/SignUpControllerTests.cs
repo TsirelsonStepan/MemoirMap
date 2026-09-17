@@ -5,11 +5,11 @@ using MemoirMap.Models.DTOs;
 
 namespace MemoirMap.Tests.ControllerTests;
 
-public class SignUpControllerTests : IClassFixture<CustomWebApplicationFactory<Program>>
+public abstract class SignUpControllerTestsBase
 {
-    private readonly CustomWebApplicationFactory<Program> _factory;
+    private readonly TestFactoryBase _factory;
 
-    public SignUpControllerTests(CustomWebApplicationFactory<Program> factory)
+    public SignUpControllerTestsBase(TestFactoryBase factory)
     {
         _factory = factory;
     }
@@ -42,10 +42,10 @@ public class SignUpControllerTests : IClassFixture<CustomWebApplicationFactory<P
                 Password = password
             }
         );
-        ErrorsResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorsResponse>();
 
         // Assert
         Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
+        ErrorsResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorsResponse>();
         Assert.NotNull(errorsResponse);
         Assert.NotEmpty(errorsResponse.Errors);
         Assert.Contains(ApplicationErrorType.duplicate_user_name.ToString(), errorsResponse.Errors);
@@ -69,10 +69,10 @@ public class SignUpControllerTests : IClassFixture<CustomWebApplicationFactory<P
                 Password = password
             }
         );
-        ErrorsResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorsResponse>();
 
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        ErrorsResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorsResponse>();
         Assert.NotNull(errorsResponse);
         Assert.NotEmpty(errorsResponse.Errors);
         Assert.Contains(ApplicationErrorType.invalid_user_name.ToString(), errorsResponse.Errors);
@@ -96,12 +96,24 @@ public class SignUpControllerTests : IClassFixture<CustomWebApplicationFactory<P
                 Password = password
             }
         );
-        ErrorsResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorsResponse>();
 
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        ErrorsResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorsResponse>();
         Assert.NotNull(errorsResponse);
         Assert.NotEmpty(errorsResponse.Errors);
         Assert.Contains(ApplicationErrorType.password_too_short.ToString(), errorsResponse.Errors);
     }
 }
+
+public class SignUpControllerTestsBase_Identity : SignUpControllerTestsBase, IClassFixture<IdentityTestFactory>
+{
+    public SignUpControllerTestsBase_Identity(IdentityTestFactory factory) : base(factory) { }
+}
+
+/*
+public class SignUpControllerTestsBase_Custom : SignUpControllerTestsBase, IClassFixture<CustomTestFactory>
+{
+    public SignUpControllerTestsBase_Custom(CustomTestFactory factory) : base(factory) { }
+}
+*/
