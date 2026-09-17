@@ -4,14 +4,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 using MemoirMap.Models.DTOs;
 using MemoirMap.Infrastructure.Identity;
+using MemoirMap.Infrastructure.Custom;
 
 namespace MemoirMap.Tests.UseCaseTests;
 
-public class DeleteAccountUseCases : IClassFixture<CustomWebApplicationFactory<Program>>
+public abstract class DeleteAccountUseCasesBase
 {
-    private readonly CustomWebApplicationFactory<Program> _factory;
+    protected readonly TestFactoryBase _factory;
 
-    public DeleteAccountUseCases(CustomWebApplicationFactory<Program> factory)
+    protected DeleteAccountUseCasesBase(TestFactoryBase factory)
     {
         _factory = factory;
     }
@@ -76,17 +77,41 @@ public class DeleteAccountUseCases : IClassFixture<CustomWebApplicationFactory<P
 
     private async Task DeleteAccount(HttpClient client, string username)
     {
-        // Arrange
-        using IServiceScope scope = _factory.Services.CreateScope();
-        IdentityApplicationDbContext db = scope.ServiceProvider.GetRequiredService<IdentityApplicationDbContext>();
-
         // Act
-        bool existsBeforeDelete = await db.Users.AnyAsync(x => x.UserName == username);
+        bool existsBeforeDelete = await IsInDb(username);
         HttpResponseMessage responseMessage = await client.DeleteAsync("/my/account");
-        bool existsAfterDelete = await db.Users.AnyAsync(x => x.UserName == username);
+        bool existsAfterDelete = await IsInDb(username);
 
         // Assert
         responseMessage.EnsureSuccessStatusCode();
         Assert.True(existsBeforeDelete && !existsAfterDelete, "User should be deleted");
     }
+
+    public abstract Task<bool> IsInDb(string username);
 }
+
+public class DeleteAccountUseCases_Identity : DeleteAccountUseCasesBase, IClassFixture<IdentityTestFactory>
+{
+    public DeleteAccountUseCases_Identity(IdentityTestFactory factory) : base(factory) { }
+
+    public override async Task<bool> IsInDb(string username)
+    {
+        using IServiceScope scope = _factory.CreateScope();
+        IdentityApplicationDbContext db = scope.ServiceProvider.GetRequiredService<IdentityApplicationDbContext>();
+        return await db.Users.AnyAsync(x => x.UserName == username);
+    }
+}
+
+/*
+public class DeleteAccountUseCases_Custom : DeleteAccountUseCasesBase, IClassFixture<CustomTestFactory>
+{
+    public DeleteAccountUseCases_Custom(CustomTestFactory factory) : base(factory) { }
+
+    public override async Task<bool> IsInDb(string username)
+    {
+        using IServiceScope scope = _factory.CreateScope();
+        CustomApplicationDbContext db = scope.ServiceProvider.GetRequiredService<CustomApplicationDbContext>();
+        return await db.UserAccounts.AnyAsync(x => x.Username == username);
+    }
+}
+*/

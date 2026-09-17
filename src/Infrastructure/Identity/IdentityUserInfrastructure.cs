@@ -32,7 +32,8 @@ public class IdentityUserInfrastructure : IUserAccountInfrastructure
 
     public async Task<ApplicationResult> DeleteUserByIdAsync(string userId)
     {
-        IdentityUserAccountEntity identityUser = await _userManager.FindByIdAsync(userId) ?? throw new ArgumentNullException();
+        IdentityUserAccountEntity? identityUser = await _userManager.FindByIdAsync(userId);
+        if (identityUser == null) return ApplicationResult.Failure([ApplicationErrorType.invalid_credentials]);
         IdentityResult identityResult = await _userManager.DeleteAsync(identityUser);
         return identityResult.Map();
     }

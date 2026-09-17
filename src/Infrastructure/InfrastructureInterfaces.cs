@@ -1,4 +1,5 @@
 using MemoirMap.Models.EntityModels;
+
 namespace MemoirMap.Infrastructure;
 
 public interface IUserAccountInfrastructure

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Diagnostics;
 
-class ApplicationExceptionHandler : IExceptionHandler
+public class ApplicationExceptionHandler : IExceptionHandler
 {
 	private readonly ILogger<ApplicationExceptionHandler> _logger;
 	public ApplicationExceptionHandler(ILogger<ApplicationExceptionHandler> logger)

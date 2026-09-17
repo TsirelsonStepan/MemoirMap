@@ -5,11 +5,11 @@ using MemoirMap.Models.DTOs;
 
 namespace MemoirMap.Tests.UseCaseTests;
 
-public class LogInUseCases : IClassFixture<CustomWebApplicationFactory<Program>>
+public abstract class LogInUseCasesBase
 {
-    private readonly CustomWebApplicationFactory<Program> _factory;
+    private readonly TestFactoryBase _factory;
 
-    public LogInUseCases(CustomWebApplicationFactory<Program> factory)
+    public LogInUseCasesBase(TestFactoryBase factory)
     {
         _factory = factory;
     }
@@ -87,3 +87,15 @@ public class LogInUseCases : IClassFixture<CustomWebApplicationFactory<Program>>
         return responseMessage;
     }
 }
+
+public class LogInUseCases_Identity : LogInUseCasesBase, IClassFixture<IdentityTestFactory>
+{
+    public LogInUseCases_Identity(IdentityTestFactory factory) : base(factory) { }
+}
+
+/*
+public class LogInUseCases_Custom : LogInUseCasesBase, IClassFixture<IdentityTestFactory>
+{
+    public LogInUseCases_Custom(IdentityTestFactory factory) : base(factory) { }
+}
+*/
