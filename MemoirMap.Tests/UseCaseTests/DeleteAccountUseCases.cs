@@ -2,8 +2,8 @@ using System.Net.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-using MemoirMap.Infrastructure;
 using MemoirMap.Models.DTOs;
+using MemoirMap.Infrastructure.Identity;
 
 namespace MemoirMap.Tests.UseCaseTests;
 
@@ -78,7 +78,7 @@ public class DeleteAccountUseCases : IClassFixture<CustomWebApplicationFactory<P
     {
         // Arrange
         using IServiceScope scope = _factory.Services.CreateScope();
-        ApplicationDbContext db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        IdentityApplicationDbContext db = scope.ServiceProvider.GetRequiredService<IdentityApplicationDbContext>();
 
         // Act
         bool existsBeforeDelete = await db.Users.AnyAsync(x => x.UserName == username);

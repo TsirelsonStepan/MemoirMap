@@ -1,4 +1,5 @@
 using MemoirMap.Infrastructure;
+using MemoirMap.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace MemoirMap.Configuration;
@@ -9,7 +10,7 @@ public static class DatabaseConfig
 {
     public static IServiceCollection InitializeNpgsqlDatabase(this IServiceCollection services, string? connectionString)
     {
-        services.AddDbContext<ApplicationDbContext>(options =>
+        services.AddDbContext<IdentityApplicationDbContext>(options =>
         {
             options.UseNpgsql(connectionString);
         });
@@ -19,7 +20,7 @@ public static class DatabaseConfig
 
     public static IServiceCollection InitializeSqliteDatabase(this IServiceCollection services, string? connectionString)
     {
-        services.AddDbContext<ApplicationDbContext>(options =>
+        services.AddDbContext<IdentityApplicationDbContext>(options =>
         {
             options.UseSqlite(connectionString);
         });

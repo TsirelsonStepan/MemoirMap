@@ -1,4 +1,4 @@
-using MemoirMap.Infrastructure;
+using MemoirMap.Infrastructure.Identity;
 using MemoirMap.Models.EntityModels;
 using Microsoft.AspNetCore.Identity;
 
@@ -9,7 +9,7 @@ public static class IdentityConfig
     public static IServiceCollection InitializeIdentity(this IServiceCollection services)
     {
         services
-        .AddIdentityCore<UserAccountEntity>(options =>
+        .AddIdentityCore<IdentityUserAccountEntity>(options =>
         {
             options.Password.RequireDigit = false;
             options.Password.RequireUppercase = false;
@@ -17,7 +17,7 @@ public static class IdentityConfig
             options.Password.RequireNonAlphanumeric = false;
         })
         .AddRoles<IdentityRole>()
-        .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddEntityFrameworkStores<IdentityApplicationDbContext>()
         .AddSignInManager();
 
         return services;

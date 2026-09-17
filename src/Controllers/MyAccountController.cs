@@ -1,7 +1,8 @@
 using System.Security.Claims;
-using MemoirMap.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
+using MemoirMap.Services;
 
 namespace MemoirMap.Controllers;
 
@@ -22,8 +23,8 @@ public class MyAccountController : ControllerBase
     [HttpDelete]
     public async Task<IActionResult> DeleteAccount()
     {
-        string username = User.FindFirstValue(ClaimTypes.Name)!;
-        ApplicationResult result = await _account.DeleteAccount(username);
+        string userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? throw new ArgumentNullException();
+        ApplicationResult result = await _account.DeleteAccount(userId);
         if (result.IsSuccess) return StatusCode(StatusCodes.Status200OK);
         return StatusCode(ErrorToHttpStatusCodeMapper.HttpStatusCodeFromErrorCodes(result.Errors), result.Errors.Select(error => error.ToString()));
     }

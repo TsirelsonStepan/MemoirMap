@@ -22,11 +22,11 @@ public class JwtTokenInfrastructure : ITokenInfrastructure
 
     private async Task<string> CreateAccessTokenAsync(UserAccountEntity user)
     {
-        string username = user.UserName!;
+        string userId = user.Id;
 
         var claims = new[]
         {
-            new Claim(ClaimTypes.Name, username),
+            new Claim(ClaimTypes.NameIdentifier, userId),
         };
 
         var token = new JwtSecurityToken

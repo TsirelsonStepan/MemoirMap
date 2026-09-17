@@ -6,9 +6,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Hosting;
-
-using MemoirMap.Infrastructure;
 using Microsoft.AspNetCore.TestHost;
+
+using MemoirMap.Infrastructure.Identity;
+
+namespace MemoirMap.Tests;
 
 public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram> where TProgram : class
 {
@@ -16,7 +18,7 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
     {
         builder.ConfigureTestServices(services =>
         {
-            ServiceDescriptor? dbContextDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IDbContextOptionsConfiguration<ApplicationDbContext>));
+            ServiceDescriptor? dbContextDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(IDbContextOptionsConfiguration<IdentityApplicationDbContext>));
 
             if (dbContextDescriptor != null) services.Remove(dbContextDescriptor);
 
@@ -33,22 +35,22 @@ public class CustomWebApplicationFactory<TProgram> : WebApplicationFactory<TProg
                 return connection;
             });
 
-            services.AddDbContext<ApplicationDbContext>((container, options) =>
+            services.AddDbContext<IdentityApplicationDbContext>((container, options) =>
             {
                 DbConnection connection = container.GetRequiredService<DbConnection>();
                 options.UseSqlite(connection);
             });
-        });        
+        });
 
         builder.UseEnvironment("Development");
     }
+
     protected override IHost CreateHost(IHostBuilder builder)
     {
         IHost host = base.CreateHost(builder);
 
         using IServiceScope scope = host.Services.CreateScope();
-        IServiceProvider serviceProvider = scope.ServiceProvider;
-        ApplicationDbContext db = serviceProvider.GetRequiredService<ApplicationDbContext>();
+        IdentityApplicationDbContext db = scope.ServiceProvider.GetRequiredService<IdentityApplicationDbContext>();
         db.Database.EnsureCreated();
 
         return host;

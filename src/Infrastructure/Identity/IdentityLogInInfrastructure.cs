@@ -1,20 +1,21 @@
 using MemoirMap.Models.EntityModels;
 using Microsoft.AspNetCore.Identity;
 
-namespace MemoirMap.Infrastructure;
+namespace MemoirMap.Infrastructure.Identity;
 
-public class LogInInfrastructure : ILogInInfrastructure
+public class IdentityLogInInfrastructure : ILogInInfrastructure
 {
-    private readonly SignInManager<UserAccountEntity> _signInManager;
+    private readonly SignInManager<IdentityUserAccountEntity> _signInManager;
 
-    public LogInInfrastructure(SignInManager<UserAccountEntity> signInManager)
+    public IdentityLogInInfrastructure(SignInManager<IdentityUserAccountEntity> signInManager)
     {
         _signInManager = signInManager;
     }
 
-    public async Task<ApplicationResult> CheckPasswordAsync(UserAccountEntity user, string password)
+    public async Task<ApplicationResult> CheckPasswordAsync(string username, string password)
     {
-        SignInResult signInResult = await _signInManager.CheckPasswordSignInAsync(user, password, true);
+        IdentityUserAccountEntity identityUser = await _signInManager.UserManager.FindByNameAsync(username) ?? throw new ArgumentNullException();
+        SignInResult signInResult = await _signInManager.CheckPasswordSignInAsync(identityUser, password, true);
         if (signInResult.Succeeded) return ApplicationResult.Success();
         if (signInResult.IsLockedOut) return ApplicationResult.Failure([ApplicationErrorType.user_locked_out]);
         if (signInResult.IsNotAllowed) return ApplicationResult.Failure([ApplicationErrorType.user_not_allowed]);
