@@ -23,7 +23,7 @@ public class CustomUserInfrastructure : IUserAccountInfrastructure
 
     //Update
 
-    public async Task<ApplicationResult> DeleteUserAsync(UserAccountEntity user)
+    public async Task<ApplicationResult> DeleteUserByIdAsync(string userId)
     {
         throw new NotImplementedException();
     }

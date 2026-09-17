@@ -1,6 +1,6 @@
 using MemoirMap.Models.EntityModels;
 
-namespace MemoirMap.Infrastructure;
+namespace MemoirMap.Infrastructure.Custom;
 
 public class CustomUserInfrastructure : IUserAccountInfrastructure
 {
