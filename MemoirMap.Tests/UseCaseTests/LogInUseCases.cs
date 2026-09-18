@@ -93,9 +93,8 @@ public class LogInUseCases_Identity : LogInUseCasesBase, IClassFixture<IdentityT
     public LogInUseCases_Identity(IdentityTestFactory factory) : base(factory) { }
 }
 
-/*
+
 public class LogInUseCases_Custom : LogInUseCasesBase, IClassFixture<IdentityTestFactory>
 {
     public LogInUseCases_Custom(IdentityTestFactory factory) : base(factory) { }
 }
-*/

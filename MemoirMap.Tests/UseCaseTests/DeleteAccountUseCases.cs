@@ -102,7 +102,7 @@ public class DeleteAccountUseCases_Identity : DeleteAccountUseCasesBase, IClassF
     }
 }
 
-/*
+
 public class DeleteAccountUseCases_Custom : DeleteAccountUseCasesBase, IClassFixture<CustomTestFactory>
 {
     public DeleteAccountUseCases_Custom(CustomTestFactory factory) : base(factory) { }
@@ -114,4 +114,3 @@ public class DeleteAccountUseCases_Custom : DeleteAccountUseCasesBase, IClassFix
         return await db.UserAccounts.AnyAsync(x => x.Username == username);
     }
 }
-*/
