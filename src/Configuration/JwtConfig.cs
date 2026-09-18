@@ -6,17 +6,17 @@ namespace MemoirMap.Configuration;
 
 public static class JwtConfig
 {
-    public static IServiceCollection InitializeJwt(this IServiceCollection services, JwtOptions jwtOptions, string? securityKeyPem)
+    public static IServiceCollection InitializeJwt(this IServiceCollection services, JwtOptions jwtOptions)
     {
-        if (securityKeyPem == null) return services; //can't configure JWT without securityKey
-
-        RsaSigningKey securityKey = new(securityKeyPem);
+        if (jwtOptions.PrivateKeyPem == null) return services; //can't configure JWT without securityKey
+        RsaSigningKey securityKey = new(jwtOptions.PrivateKeyPem);
 
         services.Configure<JwtOptions>(o =>
         {
             o.Issuer = jwtOptions.Issuer;
             o.Audience = jwtOptions.Audience;
             o.ExpirationMinutes = jwtOptions.ExpirationMinutes;
+            o.PrivateKeyPem = null;
         });
 
         services
@@ -73,4 +73,5 @@ public class JwtOptions
     public required string Issuer { get; set; }
     public required string Audience { get; set; }
     public required int ExpirationMinutes { get; set; }
+    public string? PrivateKeyPem { get; set; }
 }
