@@ -25,7 +25,7 @@ static class ErrorToHttpStatusCodeMapper
         //[ApplicationErrorType.password_requires_digit] = StatusCodes.Status400BadRequest,
         //[ApplicationErrorType.password_requires_lower] = StatusCodes.Status400BadRequest,
         //[ApplicationErrorType.password_requires_non_alphanumeric] = StatusCodes.Status400BadRequest,
-        //[ApplicationErrorType.password_requires_unique_chars] = StatusCodes.Status400BadRequest,
+        [ApplicationErrorType.password_requires_unique_chars] = StatusCodes.Status400BadRequest,
         //[ApplicationErrorType.password_requires_upper] = StatusCodes.Status400BadRequest,
         [ApplicationErrorType.password_too_short] = StatusCodes.Status400BadRequest,
         [ApplicationErrorType.invalid_token] = StatusCodes.Status400BadRequest,

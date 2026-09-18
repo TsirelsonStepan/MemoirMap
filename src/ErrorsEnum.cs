@@ -17,7 +17,7 @@ public enum ApplicationErrorType
     //password_requires_digit,
     //password_requires_lower,
     //password_requires_non_alphanumeric,
-    //password_requires_unique_chars,
+    password_requires_unique_chars,
     //password_requires_upper,
     password_too_short,
     invalid_token,
