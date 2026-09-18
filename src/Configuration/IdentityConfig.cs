@@ -1,4 +1,3 @@
-using MemoirMap.Infrastructure;
 using MemoirMap.Infrastructure.Custom;
 using MemoirMap.Infrastructure.Identity;
 using MemoirMap.Models.EntityModels;
@@ -22,16 +21,21 @@ public static class IdentityConfig
         .AddEntityFrameworkStores<IdentityApplicationDbContext>()
         .AddSignInManager();
 
-        services.AddScoped<ILogInInfrastructure, IdentityLogInInfrastructure>();
-        services.AddScoped<IUserAccountInfrastructure, IdentityUserInfrastructure>();
-
         return services;
     }
-    
+
     public static IServiceCollection InitializeCustomIdentity(this IServiceCollection services)
     {
-        services.AddScoped<ILogInInfrastructure, CustomInfrastructure>();
-        services.AddScoped<IUserAccountInfrastructure, CustomInfrastructure>();
+        services
+        .AddIdentityCore<CustomUserAccountEntity>(options =>
+        {
+            options.Password.RequireDigit = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireLowercase = false;
+            options.Password.RequireNonAlphanumeric = false;
+        })
+        .AddUserStore<CustomUserStore>()
+        .AddSignInManager();
 
         return services;
     }
