@@ -1,11 +1,13 @@
 using MemoirMap.Infrastructure;
+using MemoirMap.Infrastructure.Custom;
+using MemoirMap.Infrastructure.Identity;
 using MemoirMap.Services;
 
 namespace MemoirMap.Configuration;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection InjectServices(this IServiceCollection services)
+    public static IServiceCollection InjectCommon(this IServiceCollection services)
     {
         services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<ILogInService, LogInService>();
@@ -17,7 +19,23 @@ public static class DependencyInjection
         services.AddScoped<ISaveExperienceService, SaveExperienceService>();
         services.AddScoped<ISubscriptionService, SubscriptionService>();
 
-        services.AddScoped<ITokenInfrastructure, JwtTokenInfrastructure>();
+        services.AddScoped<ITokenInfrastructure, JwtInfrastructure>();
+
+        return services;
+    }
+
+    public static IServiceCollection InjectCustomUser(this IServiceCollection services)
+    {
+        services.AddScoped<ILogInInfrastructure, CustomUserInfrastructure>();
+        services.AddScoped<IUserAccountInfrastructure, CustomUserInfrastructure>();
+
+        return services;
+    }
+
+    public static IServiceCollection InjectIdentityUser(this IServiceCollection services)
+    {
+        services.AddScoped<ILogInInfrastructure, IdentityLogInInfrastructure>();
+        services.AddScoped<IUserAccountInfrastructure, IdentityUserInfrastructure>();
 
         return services;
     }

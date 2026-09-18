@@ -8,13 +8,13 @@ using MemoirMap.Models.EntityModels;
 
 namespace MemoirMap.Infrastructure;
 
-public class JwtTokenInfrastructure : ITokenInfrastructure
+public class JwtInfrastructure : ITokenInfrastructure
 {
     private readonly JwtOptions _jwtOptions;
     private readonly RsaSigningKey _signingKey;
     private readonly JwtSecurityTokenHandler _jwtHandler = new();
 
-    public JwtTokenInfrastructure(IOptions<JwtOptions> options, RsaSigningKey signingKey)
+    public JwtInfrastructure(IOptions<JwtOptions> options, RsaSigningKey signingKey)
     {
         _jwtOptions = options.Value;
         _signingKey = signingKey;

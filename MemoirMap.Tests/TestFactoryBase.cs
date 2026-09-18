@@ -19,10 +19,10 @@ public abstract class TestFactoryBase : IAsyncLifetime
     {
         Issuer = "TestIssuer",
         Audience = "TestAudience",
-        ExpirationMinutes = 60
+        ExpirationMinutes = 60,
+        PrivateKeyPem = NewRsaPem()
     };
 
-    protected static readonly string TestPrivateKeyPem = NewRsaPem();
     private static string NewRsaPem()
     {
         using var rsa = RSA.Create(2048);
@@ -44,7 +44,18 @@ public abstract class TestFactoryBase : IAsyncLifetime
             {
                 web.UseTestServer();
 
-                web.ConfigureServices(services => ConfigureServices(services));
+                web.ConfigureServices(services =>
+                {
+                    System.Reflection.Assembly apiAssembly = typeof(Program).Assembly;
+                    services.AddControllers().AddApplicationPart(apiAssembly);
+                    services.InjectCommon();
+                    services.AddExceptionHandler<ApplicationExceptionHandler>();
+                    services.AddProblemDetails();
+                    services.InitializeJwt(TestJwtOptions);
+                    services.AddAuthorization();
+
+                    ConfigureServices(services);
+                });
 
                 web.Configure(app =>
                 {

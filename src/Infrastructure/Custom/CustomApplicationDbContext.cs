@@ -1,4 +1,5 @@
 using MemoirMap.Models.EntityModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace MemoirMap.Infrastructure.Custom;
@@ -28,76 +29,76 @@ public class CustomApplicationDbContext : DbContext
 
     public DbSet<CustomUserAccountEntity> UserAccounts { get; set; }
 }
-/*
-public class UserAccountStore : IUserStore<UserAccountEntity>, IUserPasswordStore<UserAccountEntity>
-{
-    private readonly ApplicationDbContext _db;
 
-    public UserAccountStore(ApplicationDbContext db)
+public class CustomUserStore : IUserStore<CustomUserAccountEntity>, IUserPasswordStore<CustomUserAccountEntity>
+{
+    private readonly CustomApplicationDbContext _db;
+
+    public CustomUserStore(CustomApplicationDbContext db)
     {
         _db = db;
     }
 
-    public Task<string> GetUserIdAsync(UserAccountEntity user, CancellationToken cancellationToken)
+    public Task<string> GetUserIdAsync(CustomUserAccountEntity user, CancellationToken cancellationToken)
     {
         return Task.FromResult(user.Id);
     }
 
-    public Task<string?> GetUserNameAsync(UserAccountEntity user, CancellationToken cancellationToken)
+    public Task<string?> GetUserNameAsync(CustomUserAccountEntity user, CancellationToken cancellationToken)
     {
         return Task.FromResult<string?>(user.Username);
     }
 
-    public Task SetUserNameAsync(UserAccountEntity user, string? userName, CancellationToken cancellationToken)
+    public Task SetUserNameAsync(CustomUserAccountEntity user, string? userName, CancellationToken cancellationToken)
     {
         user.Username = userName!;
         return Task.CompletedTask;
     }
 
-    public Task<string?> GetNormalizedUserNameAsync(UserAccountEntity user, CancellationToken cancellationToken)
+    public Task<string?> GetNormalizedUserNameAsync(CustomUserAccountEntity user, CancellationToken cancellationToken)
     {
         return Task.FromResult<string?>(user.NormalizedUsername);
     }
 
-    public Task SetNormalizedUserNameAsync(UserAccountEntity user, string? normalizedName, CancellationToken cancellationToken)
+    public Task SetNormalizedUserNameAsync(CustomUserAccountEntity user, string? normalizedName, CancellationToken cancellationToken)
     {
         user.NormalizedUsername = normalizedName ?? string.Empty;
         return Task.CompletedTask;
     }
 
-    public async Task<IdentityResult> CreateAsync(UserAccountEntity user, CancellationToken cancellationToken)
+    public async Task<IdentityResult> CreateAsync(CustomUserAccountEntity user, CancellationToken cancellationToken)
     {
         user.Id = Guid.NewGuid().ToString();
-        _db.Users.Add(user);
+        _db.UserAccounts.Add(user);
         await _db.SaveChangesAsync(cancellationToken);
 
         return IdentityResult.Success;
     }
 
-    public async Task<IdentityResult> UpdateAsync(UserAccountEntity user, CancellationToken cancellationToken)
+    public async Task<IdentityResult> UpdateAsync(CustomUserAccountEntity user, CancellationToken cancellationToken)
     {
-        _db.Users.Update(user);
+        _db.UserAccounts.Update(user);
         await _db.SaveChangesAsync(cancellationToken);
 
         return IdentityResult.Success;
     }
 
-    public async Task<IdentityResult> DeleteAsync(UserAccountEntity user, CancellationToken cancellationToken)
+    public async Task<IdentityResult> DeleteAsync(CustomUserAccountEntity user, CancellationToken cancellationToken)
     {
-        _db.Users.Remove(user);
+        _db.UserAccounts.Remove(user);
         await _db.SaveChangesAsync(cancellationToken);
 
         return IdentityResult.Success;
     }
 
-    public Task<UserAccountEntity?> FindByIdAsync(string userId, CancellationToken cancellationToken)
+    public Task<CustomUserAccountEntity?> FindByIdAsync(string userId, CancellationToken cancellationToken)
     {
-        return _db.Users.FindAsync([userId], cancellationToken).AsTask();
+        return _db.UserAccounts.FindAsync([userId], cancellationToken).AsTask();
     }
 
-    public Task<UserAccountEntity?> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
+    public Task<CustomUserAccountEntity?> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
     {
-        return _db.Users.FirstOrDefaultAsync(x => x.NormalizedUsername == normalizedUserName, cancellationToken);
+        return _db.UserAccounts.FirstOrDefaultAsync(x => x.NormalizedUsername == normalizedUserName, cancellationToken);
     }
 
     public void Dispose()
@@ -105,19 +106,19 @@ public class UserAccountStore : IUserStore<UserAccountEntity>, IUserPasswordStor
         
     }
 
-    public Task SetPasswordHashAsync(UserAccountEntity user, string? passwordHash, CancellationToken cancellationToken)
+    public Task SetPasswordHashAsync(CustomUserAccountEntity user, string? passwordHash, CancellationToken cancellationToken)
     {
         user.PasswordHash = passwordHash!;
         return Task.CompletedTask;
     }
 
-    public Task<string?> GetPasswordHashAsync(UserAccountEntity user, CancellationToken cancellationToken)
+    public Task<string?> GetPasswordHashAsync(CustomUserAccountEntity user, CancellationToken cancellationToken)
     {
         return Task.FromResult<string?>(user.PasswordHash);
     }
 
-    public Task<bool> HasPasswordAsync(UserAccountEntity user, CancellationToken cancellationToken)
+    public Task<bool> HasPasswordAsync(CustomUserAccountEntity user, CancellationToken cancellationToken)
     {
         return Task.FromResult(!string.IsNullOrEmpty(user.PasswordHash));
     }
-}*/
+}

@@ -2,30 +2,29 @@ using MemoirMap.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
-
 //MINE BEGIN
-builder.Services.InjectServices();
-builder.Services.AddAuthorizationToOpenApiEndpoints();
+builder.Services.InjectCommon();
 
-//builder.Services.InitializeNpgsqlDatabase(builder.Configuration.GetConnectionString("PostgresqlConnection"));
+builder.Services.InjectIdentityUser();
+builder.Services.InitializeIdentity();
+//builder.Services.InitializeNpgsqlDatabaseWithIdentity(builder.Configuration.GetConnectionString("PostgresqlConnection"));
 builder.Services.InitializeSqliteDatabaseWithIdentity(builder.Configuration.GetConnectionString("SqliteConnection"));
 
-builder.Services.InitializeIdentity();
+builder.Services.AddAuthorizationToOpenApiEndpoints();
 
 builder.Services.AddExceptionHandler<ApplicationExceptionHandler>();
 builder.Services.AddProblemDetails();
+
 builder.Services.InitializeJwt
 (
-    builder.Configuration.GetSection("Jwt").Get<JwtOptions>() ?? throw new InvalidOperationException("JWT configuration is undefined"),
-    builder.Configuration.GetValue<string>("PrivateKeyPem")
+    builder.Configuration.GetSection("Jwt").Get<JwtOptions>()
+    ?? throw new InvalidOperationException("JWT configuration is undefined")
 );
 builder.Services.AddAuthorization();
 
 //MINE END
-
 
 var app = builder.Build();
 

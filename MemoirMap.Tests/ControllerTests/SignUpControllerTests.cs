@@ -78,12 +78,16 @@ public abstract class SignUpControllerTestsBase
         Assert.Contains(ApplicationErrorType.invalid_user_name.ToString(), errorsResponse.Errors);
     }
 
-    [Fact]
-    public async Task SignUpControllerTest_BadPasswordFailure()
+    [Theory]
+    [InlineData("")]
+    [InlineData("123")]
+    [InlineData("_")]
+    [InlineData("abcde")]
+    
+    public async Task SignUpControllerTest_BadPasswordFailure(string password)
     {
         // Arrange
         string username = Guid.NewGuid().ToString();
-        string password = "_";
         HttpClient client = _factory.CreateClient();
 
         // Act
@@ -111,9 +115,8 @@ public class SignUpControllerTestsBase_Identity : SignUpControllerTestsBase, ICl
     public SignUpControllerTestsBase_Identity(IdentityTestFactory factory) : base(factory) { }
 }
 
-/*
+
 public class SignUpControllerTestsBase_Custom : SignUpControllerTestsBase, IClassFixture<CustomTestFactory>
 {
     public SignUpControllerTestsBase_Custom(CustomTestFactory factory) : base(factory) { }
 }
-*/
