@@ -1,7 +1,7 @@
 
 using Microsoft.AspNetCore.Identity;
 
-namespace MemoirMap.Infrastructure.Identity;
+namespace MemoirMap.Infrastructure;
 
 public static class IdentityResultMapper
 {
@@ -28,7 +28,7 @@ public static class IdentityResultMapper
         //["PasswordRequiresDigit"] = ApplicationErrorType.password_requires_digit,
         //["PasswordRequiresLower"] = ApplicationErrorType.password_requires_lower,
         //["PasswordRequiresNonAlphanumeric"] = ApplicationErrorType.password_requires_non_alphanumeric,
-        //["PasswordRequiresUniqueChars"] = ApplicationErrorType.password_requires_unique_chars,
+        ["PasswordRequiresUniqueChars"] = ApplicationErrorType.password_requires_unique_chars,
         //["PasswordRequiresUpper"] = ApplicationErrorType.password_requires_upper,
         ["PasswordTooShort"] = ApplicationErrorType.password_too_short,
         ["InvalidToken"] = ApplicationErrorType.invalid_token,
