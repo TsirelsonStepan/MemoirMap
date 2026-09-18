@@ -11,10 +11,8 @@ public sealed class CustomTestFactory : TestFactoryBase
 {
     public override void ConfigureServices(IServiceCollection services)
     {
-        System.Reflection.Assembly apiAssembly = typeof(Program).Assembly;
-        services.AddControllers().AddApplicationPart(apiAssembly);
-
-        services.InjectServices();
+        services.InjectCustomUser();
+        services.InitializeCustomIdentity();
 
         var connection = new SqliteConnection("Data Source=:memory:");
         connection.Open();
@@ -23,12 +21,6 @@ public sealed class CustomTestFactory : TestFactoryBase
         {
             options.UseSqlite(connection);
         });
-
-        services.InitializeCustomIdentity();
-        services.AddExceptionHandler<ApplicationExceptionHandler>();
-        services.AddProblemDetails();
-        services.InitializeJwt(TestJwtOptions, TestPrivateKeyPem);
-        services.AddAuthorization();
     }
 
     public override void CreateDbSchema()
