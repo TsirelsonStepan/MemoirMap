@@ -1,5 +1,7 @@
 ## Ignore VSCode-specific files
 .vscode
+.codeatlas
+.mcp.json
 
 ## Hide all Frontend files for now
 src/Views
