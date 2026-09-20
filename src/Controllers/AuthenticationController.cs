@@ -21,7 +21,7 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> LogIn([FromBody] LoginRequest loginData)
+    public async Task<IActionResult> LogIn([FromBody] LogInRequest loginData)
     {
         ApplicationResult<string> result = await _logIn.LogIn(loginData.Username, loginData.Password);
         
@@ -36,7 +36,7 @@ public class AuthenticationController : ControllerBase
         return StatusCode
         (
             ErrorToHttpStatusCodeMapper.HttpStatusCodeFromErrorCodes(result.Errors),
-            new ErrorsResponse()
+            new ErrorResponse()
             {
                 Errors = result.Errors.Select(error => error.ToString())
             }
@@ -44,7 +44,7 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("signup")]
-    public async Task<IActionResult> SignUp([FromBody] LoginRequest loginData)
+    public async Task<IActionResult> SignUp([FromBody] SignUpRequest loginData)
     {
         ApplicationResult result = await _signUp.SignUp(loginData.Username, loginData.Password);
 
@@ -52,7 +52,7 @@ public class AuthenticationController : ControllerBase
         return StatusCode
         (
             ErrorToHttpStatusCodeMapper.HttpStatusCodeFromErrorCodes(result.Errors),
-            new ErrorsResponse()
+            new ErrorResponse()
             {
                 Errors = result.Errors.Select(error => error.ToString())
             }

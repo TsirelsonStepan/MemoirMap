@@ -20,6 +20,7 @@ public class MyAccountController : ControllerBase
         _account = account;
     }
 
+    // TO DO: Maybe add auto-logout to log out user after deleting
     [HttpDelete]
     public async Task<IActionResult> DeleteAccount()
     {
