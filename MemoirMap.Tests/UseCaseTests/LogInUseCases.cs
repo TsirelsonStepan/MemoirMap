@@ -27,7 +27,7 @@ public abstract class LogInUseCasesBase
         for (int i = 0; i < 5; i++)
             await LogIn(client, username, "WrongPassword");
         HttpResponseMessage response = await LogIn(client, username, "WrongPassword");
-        ErrorsResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorsResponse>();
+        ErrorResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorResponse>();
 
         // Assert
         Assert.Equal(HttpStatusCode.Locked, response.StatusCode);
@@ -47,7 +47,7 @@ public abstract class LogInUseCasesBase
 
         // Act
         HttpResponseMessage response = await LogIn(client, username, "WrongPassword");
-        ErrorsResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorsResponse>();
+        ErrorResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorResponse>();
 
         // Assert
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
@@ -61,7 +61,7 @@ public abstract class LogInUseCasesBase
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync
         (
             "/auth/signup",
-            new LoginRequest
+            new LogInRequest
             {
                 Username = username,
                 Password = password
@@ -77,7 +77,7 @@ public abstract class LogInUseCasesBase
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync
         (
             "/auth/login",
-            new LoginRequest
+            new LogInRequest
             {
                 Username = username,
                 Password = password

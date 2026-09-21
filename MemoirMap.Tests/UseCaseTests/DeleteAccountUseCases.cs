@@ -40,7 +40,7 @@ public abstract class DeleteAccountUseCasesBase
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync
         (
             "/auth/signup",
-            new LoginRequest
+            new LogInRequest
             {
                 Username = username,
                 Password = password
@@ -59,7 +59,7 @@ public abstract class DeleteAccountUseCasesBase
         HttpResponseMessage responseMessage = await client.PostAsJsonAsync
         (
             "/auth/login",
-            new LoginRequest
+            new LogInRequest
             {
                 Username = username,
                 Password = password

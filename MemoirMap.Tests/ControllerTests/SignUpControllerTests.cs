@@ -26,7 +26,7 @@ public abstract class SignUpControllerTestsBase
         await client.PostAsJsonAsync
         (
             "/auth/signup",
-            new LoginRequest
+            new LogInRequest
             {
                 Username = username,
                 Password = password
@@ -36,7 +36,7 @@ public abstract class SignUpControllerTestsBase
         HttpResponseMessage response = await client.PostAsJsonAsync
         (
             "/auth/signup",
-            new LoginRequest
+            new LogInRequest
             {
                 Username = username,
                 Password = password
@@ -45,7 +45,7 @@ public abstract class SignUpControllerTestsBase
 
         // Assert
         Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
-        ErrorsResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorsResponse>();
+        ErrorResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorResponse>();
         Assert.NotNull(errorsResponse);
         Assert.NotEmpty(errorsResponse.Errors);
         Assert.Contains(ApplicationErrorType.duplicate_user_name.ToString(), errorsResponse.Errors);
@@ -63,7 +63,7 @@ public abstract class SignUpControllerTestsBase
         HttpResponseMessage response = await client.PostAsJsonAsync
         (
             "/auth/signup",
-            new LoginRequest
+            new LogInRequest
             {
                 Username = username,
                 Password = password
@@ -72,7 +72,7 @@ public abstract class SignUpControllerTestsBase
 
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-        ErrorsResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorsResponse>();
+        ErrorResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorResponse>();
         Assert.NotNull(errorsResponse);
         Assert.NotEmpty(errorsResponse.Errors);
         Assert.Contains(ApplicationErrorType.invalid_user_name.ToString(), errorsResponse.Errors);
@@ -94,7 +94,7 @@ public abstract class SignUpControllerTestsBase
         HttpResponseMessage response = await client.PostAsJsonAsync
         (
             "/auth/signup",
-            new LoginRequest
+            new LogInRequest
             {
                 Username = username,
                 Password = password
@@ -103,7 +103,7 @@ public abstract class SignUpControllerTestsBase
 
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-        ErrorsResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorsResponse>();
+        ErrorResponse? errorsResponse = await response.Content.ReadFromJsonAsync<ErrorResponse>();
         Assert.NotNull(errorsResponse);
         Assert.NotEmpty(errorsResponse.Errors);
         Assert.Contains(ApplicationErrorType.password_too_short.ToString(), errorsResponse.Errors);
