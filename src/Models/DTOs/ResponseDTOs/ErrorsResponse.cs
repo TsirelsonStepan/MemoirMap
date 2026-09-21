@@ -1,6 +1,6 @@
 namespace MemoirMap.Models.DTOs;
 
-public class ErrorsResponse
+public class ErrorResponse
 {
     public IEnumerable<string> Errors { get; set; } = [];
 }

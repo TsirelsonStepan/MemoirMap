@@ -22,9 +22,10 @@ builder.Services.InitializeJwt
     builder.Configuration.GetSection("Jwt").Get<JwtOptions>()
     ?? throw new InvalidOperationException("JWT configuration is undefined")
 );
-builder.Services.AddAuthorization();
-
 //MINE END
+
+builder.Services.AddAuthorization();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -46,15 +47,10 @@ app.UseExceptionHandler();
 app.UseHsts();
 app.UseHttpsRedirection();
 
-app.UseStaticFiles();
-
 app.UseRouting();
+app.MapControllers();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
