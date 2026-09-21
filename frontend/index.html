@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Map Application</title>
+
+    <!-- Mine -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+</head>
+
+<body>
+
+<div class="app" x-data="mapApp()">
+
+    <div class="map-container">
+        <div id="map"></div>
+    </div>
+
+    <div class="app">
+
+        <div class="top-bar">
+
+            <!-- <div class="app-title">My Map</div> -->
+
+            <div class="extension-bar">
+
+                <template
+                    x-for="extension in extensions"
+                    :key="extension.id"
+                >
+
+                    <button
+                        class="extension-button"
+                        type="button"
+                        :title="extension.title"
+                        @click="openExtension(extension)"
+                    >
+                        <span x-text="extension.icon"></span>
+                    </button>
+
+                </template>
+
+            </div>
+
+        </div>
+
+        <div class="window-layer">
+
+            <template
+                x-for="window in windows"
+                :key="window.id"
+            >
+
+                <div
+                    class="window"
+                    :class="window.kind"
+                    :style="windowStyle(window)"
+                >
+
+                    <div class="window-header">
+
+                        <div
+                            class="window-title"
+                            x-text="window.title"
+                        ></div>
+
+                        <button
+                            class="window-close"
+                            type="button"
+                            @click="closeWindow(window.id)"
+                            aria-label="Close"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                    <div class="window-body">
+
+                        <template x-if="window.id === 'search'">
+
+                            <div>
+
+                                <label
+                                    style="
+                                        display:block;
+                                        margin-bottom:6px;
+                                        font-size:13px;
+                                    "
+                                >
+                                    Search
+                                </label>
+
+                                <input
+                                    type="text"
+                                    placeholder="Search places..."
+                                    style="
+                                        width:100%;
+                                        padding:10px;
+                                        border:1px solid #ccc;
+                                        border-radius:7px;
+                                    "
+                                >
+
+                                <div style="margin-top:14px;">
+                                    Search results will appear here.
+                                </div>
+
+                            </div>
+
+                        </template>
+
+                        <template x-if="window.id === 'info'">
+
+                            <div>
+
+                                <p style="margin-top:0;">
+                                    This is an example application window.
+                                </p>
+
+                                <p>
+                                    Replace this content with whatever
+                                    functionality this extension needs.
+                                </p>
+
+                            </div>
+
+                        </template>
+
+                        <template x-if="window.id === 'custom'">
+
+                            <div>
+
+                                <h3>Custom extension</h3>
+
+                                <p>
+                                    Put any application-specific UI here.
+                                </p>
+
+                                <button
+                                    type="button"
+                                    style="
+                                        padding:8px 12px;
+                                        border:0;
+                                        border-radius:6px;
+                                        cursor:pointer;
+                                    "
+                                >
+                                    Example action
+                                </button>
+
+                            </div>
+
+                        </template>
+
+                    </div>
+
+                </div>
+
+            </template>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script type="module" src="main.js"></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,291 @@
+:root {
+    --ui-bg: rgba(255, 255, 255, 0.94);
+    --ui-border: rgba(0, 0, 0, 0.12);
+    --ui-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    --radius: 10px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+
+.map-container {
+    position: fixed;
+    inset: 0;
+
+    z-index: 0;
+
+    pointer-events: auto;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.leaflet-control-zoom.leaflet-bar.leaflet-control {
+    padding: 6px;
+
+    border: 1px solid var(--ui-border) !important;
+    border-radius: var(--radius) !important;
+
+    background: var(--ui-bg);
+    box-shadow: var(--ui-shadow);
+}
+
+.leaflet-control-zoom.leaflet-bar.leaflet-control a {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0 !important;
+    border-radius: 7px !important;
+
+    background: transparent;
+    color: #222;
+
+    font-size: 18px;
+    line-height: 1;
+
+    transition:
+        background 0.15s ease,
+        transform 0.1s ease;
+}
+
+.leaflet-control-zoom.leaflet-bar.leaflet-control a:hover {
+    background: rgba(0, 0, 0, 0.07);
+}
+
+.leaflet-control-zoom.leaflet-bar.leaflet-control a:active {
+    transform: scale(0.94);
+}
+
+
+.app {
+    position: fixed;
+    inset: 0;
+
+    z-index: 1000;
+
+    pointer-events: none;
+}
+
+
+.top-bar {
+    position: absolute;
+
+    top: 16px;
+    left: 16px;
+    right: 16px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    pointer-events: none;
+}
+
+.app-title {
+    pointer-events: auto;
+
+    background: var(--ui-bg);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--radius);
+
+    box-shadow: var(--ui-shadow);
+
+    padding: 10px 14px;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.extension-bar {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+
+    gap: 6px;
+
+    background: var(--ui-bg);
+    border: 1px solid var(--ui-border);
+    border-radius: var(--radius);
+
+    box-shadow: var(--ui-shadow);
+
+    padding: 6px;
+
+    pointer-events: auto;
+}
+
+.extension-button {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: 7px;
+
+    background: transparent;
+    color: #222;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    transition:
+        background 0.15s ease,
+        transform 0.1s ease;
+}
+
+.extension-button:hover {
+    background: rgba(0, 0, 0, 0.07);
+}
+
+.extension-button:active {
+    transform: scale(0.94);
+}
+
+
+.window-layer {
+    position: absolute;
+    inset: 0;
+
+    pointer-events: none;
+}
+
+.window {
+    position: absolute;
+
+    background: var(--ui-bg);
+
+    border: 1px solid var(--ui-border);
+    border-radius: var(--radius);
+
+    box-shadow: var(--ui-shadow);
+
+    overflow: hidden;
+
+    pointer-events: auto;
+}
+
+
+.window.sidebar {
+    top: 16px;
+    bottom: 16px;
+    left: 16px;
+
+    width: 360px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+.window.popup {
+    top: 50%;
+    left: 50%;
+
+    width: 420px;
+    max-width: calc(100vw - 32px);
+
+    transform: translate(-50%, -50%);
+}
+
+
+.window-header {
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 14px;
+
+    border-bottom: 1px solid var(--ui-border);
+
+    flex-shrink: 0;
+}
+
+.window-title {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.window-close {
+    width: 30px;
+    height: 30px;
+
+    border: 0;
+    border-radius: 6px;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+
+.window-close:hover {
+    background: rgba(0, 0, 0, 0.07);
+}
+
+
+.window-body {
+    padding: 16px;
+
+    overflow: auto;
+}
+
+.sidebar .window-body {
+    flex: 1;
+}
+
+/*
+@media (max-width: 600px) {
+
+    .top-bar {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+    }
+
+    .window.sidebar {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+
+        width: auto;
+    }
+
+    .window.popup {
+        width: calc(100vw - 16px);
+    }
+}
+*/
