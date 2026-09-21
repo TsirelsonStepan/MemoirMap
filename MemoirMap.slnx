@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/MemoirMap.csproj" />
-  <Project Path="MemoirMap.Tests/MemoirMap.Tests.csproj" />
-</Solution>
